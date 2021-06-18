@@ -25,7 +25,7 @@ jobs:
       - name: Run a multi-line script
         run: |
           touch cursor.id && cat cursor.id
-          CURSOR=$((1 + $RANDOM % 100000)
+          CURSOR=$((1 + $RANDOM % 100000))
           echo $CURSOR > cursor.id
           git add cursor.id
           git commit -m "updating cursor to $CURSOR"
