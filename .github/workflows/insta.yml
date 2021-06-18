@@ -21,19 +21,12 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: Download a single artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: cursor
-
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
-          cat cursor
-          echo 0 > cursor
-      
-      - name: Upload last insta ID
-        uses: actions/upload-artifact@v2
-        with:
-          name: cursor
-          path: cursor
+          touch cursor.id && cat cursor.id
+          CURSOR=$((1 + $RANDOM % 100000)
+          echo $CURSOR > cursor.id
+          git add cursor.id
+          git commit -m "updating cursor to $CURSOR"
+          git push origin main
