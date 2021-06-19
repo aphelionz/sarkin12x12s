@@ -4,17 +4,20 @@
     <meta charset="utf-8">
 
     <title>skarkin'</title>
+
     <link rel="stylesheet" href="styles.css">
   </head>
 
   <body>
     <h1>Skarkin'</h1>
-    <h2>noun. to effortlessly publish your art as <em>sick</em> NFTs</h2>
+    <h2>verb. to effortlessly publish your art as <em>sick</em> NFTs</h2>
 
-    <button>Sign in with Metamask</button>
-    <button>Sign in with Temple</button>
+    <button id="metamask-login" class="has-metamask" data-eth-account>
+      Sign in with Metamask
+    </button>
+    <span class="no-metamask">Please install Metamask</span>
 
-    <form>
+    <form id="nft-form" class="logged-in">
       <fieldset>
         <legend>NFT Information</legend>
         <label>Upload NFT: <input type="file" multiple></label>
@@ -23,18 +26,18 @@
       <fieldset>
         <legend>Publish to:</legend>
         <label>
-          <input type="checkbox" name="social_media" value="twitter">
-          Twitter
+          <input type="checkbox" name="publish_to" value="squarespace">
+          SquareSpace
         </label>
         <label>
-          <input type="checkbox" name="publish_to" value="facebook">
-          Hic et Nunc
-        </label>
-        <label>
-          <input type="checkbox" name="publish_to" value="facebook">
+          <input type="checkbox" name="publish_to" value="opensea">
           OpenSea
         </label>
       </fieldset>
+
+      <input type="submit" value="Let's go!">
     </form>
+
+    <script src="app.js"></script>
   </body>
 </html>
