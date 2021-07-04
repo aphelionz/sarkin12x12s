@@ -1,1 +1,4 @@
 venv
+artifacts
+cache
+node_modules
