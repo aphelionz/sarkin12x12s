@@ -2,3 +2,5 @@ artifacts
 cache
 node_modules
 .ipfs
+.instaloader
+.env

@@ -1,4 +1,12 @@
 services:
+  web:
+    image: nginx:mainline-alpine
+    volumes:
+      - ./src:/usr/share/nginx/html
+      - ./node_modules:/usr/share/nginx/html/node_modules
+    ports:
+      - "8080:80"
+
   eth-devnet:
     image: node:lts
     command: bash -c "npx hardhat node"
