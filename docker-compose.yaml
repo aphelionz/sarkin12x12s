@@ -6,7 +6,7 @@ services:
       - ./hardhat.config.js:/hardhat/hardhat.config.js
       - ./package.json:/hardhat/package.json
       - ./node_modules:/hardhat/node_modules
-      - ./yarn.lock:/hardhat/yarn.lock
+      - ./package-lock.json:/hardhat/package-lock.json
     working_dir: /hardhat
     ports:
       - '8545:8545'
@@ -17,3 +17,12 @@ services:
       retries: 3
       start_period: 10s
 
+  ipfs:
+    container_name: ipfs
+    image: ipfs/go-ipfs:v0.9.0
+    ports:
+      - "5001:5001"
+#     - "4001:4001" # ipfs swarm - expose if needed/wanted
+#     - "8080:8080" # ipfs gateway - expose if needed/wanted
+    volumes:
+      - ./.ipfs:/data/ipfs
