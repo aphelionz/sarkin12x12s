@@ -88,9 +88,7 @@ describe('ERC721 Baseline', function() {
     })
   })
 
-  it('logs', async () => {
-    // console.log(nfts)
-    //
+  describe('Transfer and Approval', function () {
 /*
 
  'Approval(address,address,uint256)': [Function (anonymous)],
@@ -105,6 +103,9 @@ describe('ERC721 Baseline', function() {
  'transferFrom(address,address,uint256)': [Function (anonymous)],
 
 */
+  })
 
+  it.skip('logs', async () => {
+    console.log(nfts)
   })
 })
