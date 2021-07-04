@@ -1,7 +1,7 @@
 {
   "name": "scrarkin",
   "version": "1.0.0",
-  "description": "Uses [instascrape](https://github.com/tnychn/instascrape)",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -17,17 +17,18 @@
     "url": "https://github.com/aphelionz/scrarkin/issues"
   },
   "homepage": "https://github.com/aphelionz/scrarkin#readme",
-  "devDependencies": {
-    "chai": "^4.3.4",
-    "hardhat": "^2.4.1"
-  },
   "dependencies": {
+    "@openzeppelin/contracts": "^4.2.0",
+    "ipfs-http-client": "^50.1.2"
+  },
+  "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.2",
     "@nomiclabs/hardhat-waffle": "^2.0.1",
-    "@openzeppelin/contracts": "^4.2.0",
     "bs58": "^4.0.1",
+    "chai": "^4.3.4",
     "cids": "^1.1.7",
     "ethers": "^5.4.1",
+    "hardhat": "^2.4.1",
     "multihashing-async": "^2.1.2"
   }
 }
