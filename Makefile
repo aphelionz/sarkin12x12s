@@ -8,31 +8,37 @@ ifneq (,$(wildcard ./.env))
     export
 endif
 
-INSTA_DEST = "./.instaloader"
 INSTA_ID := $(shell cat "${INSTA_DEST}"/id)
-
+export UID = $(shell id -u)
+export GID = $(shell id -g)
 
 .PHONY: test
 test: deps
 	export CONTRACT_ADDRESS=`npx hardhat run --network localhost scripts/deploy.js | tail -1`
 	npx hardhat test --network localhost
 
-clean:
+clean: reset
 	docker-compose down
 	rm -f package-lock.json
 	rm -rf node_modules
 
 deps:
-	docker-compose up -d
-	pip3 install instaloader
+	mkdir -p ${INSTA_DEST}
 	npm install
+	# TODO: venv
+	pip3 install instaloader
+	docker-compose up -d
 
 ingest-metadata: deps
 	instaloader --fast-update --login ${INSTA_USER} ${INSTA_USER} --dirname-pattern=${INSTA_DEST}
-	cp ${INSTA_DEST}/${INSTA_USER}_${INSTA_ID}.json.xz ./src/metadata.json.xz
-	xz -fd ./src/metadata.json.xz
+	for file in ./.instaloader/*.xz; do xz -fd "$$file"; done
+	cp ${INSTA_DEST}/${INSTA_USER}_${INSTA_ID}.json ./src/metadata.json
 
-ingest: ingest-metadata
+ingest-nfts: deps
+	npx hardhat run scripts/ingest.js --network localhost
 
-stop:
+ingest: reset ingest-metadata ingest-nfts
+
+reset:
+	rm -rf .ipfs
 	docker-compose down

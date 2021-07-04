@@ -9,7 +9,7 @@ services:
 
   eth-devnet:
     image: node:lts
-    command: bash -c "npx hardhat node"
+    command: sh -c "apt update; apt install libsecret-1-dev -y; npx hardhat node"
     volumes:
       - ./hardhat.config.js:/hardhat/hardhat.config.js
       - ./package.json:/hardhat/package.json
@@ -34,3 +34,4 @@ services:
 #     - "8080:8080" # ipfs gateway - expose if needed/wanted
     volumes:
       - ./.ipfs:/data/ipfs
+      - ./.instaloader:/data/instaloader
