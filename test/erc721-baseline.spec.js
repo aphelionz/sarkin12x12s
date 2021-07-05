@@ -78,7 +78,7 @@ describe('ERC721 Baseline', function() {
       await tx.wait()
 
       const balance = await nfts.balanceOf(owner.address)
-      expect(balance).to.equal(0x03)
+      expect(balance.toString()).to.equal('3')
     })
 
     it('logs Transfer events for the above mints', async () => {

@@ -47,6 +47,9 @@ reset:
 	rm -rf .ipfs
 	docker-compose down
 	docker-compose up -d
-	sleep 5
-	docker-compose exec ipfs ipfs config --json -- API.HTTPHeaders.Access-Control-Allow-Origin '["http://127.0.0.1:3000", "http://localhost:3000"]'
+	sleep 10
+	sh -c "docker-compose exec -T ipfs ipfs config --json -- API.HTTPHeaders.Access-Control-Allow-Origin '[\"http://127.0.0.1:3000\", \"http://localhost:3000\"]'"
+	sh -c "docker-compose exec -T ipfs ipfs config --json -- Addresses.Swarm '[]'"
+	sh -c "docker-compose exec -T ipfs ipfs config --json -- Bootstrap '[]'"
 	docker-compose restart ipfs
+	sleep 10

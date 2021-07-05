@@ -41,3 +41,10 @@ services:
     volumes:
       - ./.ipfs:/data/ipfs
       - ./.instaloader:/data/instaloader
+    healthcheck:
+      test: ["CMD", "wget", "-S", "-O", "/dev/null",
+             "http://localhost:8080/ipfs/QmQPeNsJPyVWPFDVHb77w8G42Fvo15z4bG2X8D2GhfbSXc"]
+      interval: 1m
+      timeout: 5s
+      retries: 3
+      start_period: 10s
