@@ -17,10 +17,14 @@ test: reset
 	export CONTRACT_ADDRESS=`npx hardhat run --network localhost scripts/deploy.js | tail -1`
 	npx hardhat test --network localhost
 
-clean: reset
+clean:
 	docker-compose down
 	rm -f package-lock.json
 	rm -rf node_modules
+	rm -rf artifacts
+	rm -rf cache
+	rm -rf .build
+	rm -rf .ipfs
 
 deps:
 	mkdir -p ${INSTA_DEST}
@@ -41,14 +45,13 @@ ingest-metadata: deps
 ingest-nfts: deps
 	npx hardhat run scripts/ingest.js --network localhost
 
-ingest: reset ingest-metadata ingest-nfts
-
-reset:
-	rm -rf .ipfs
+reset: clean deps
+	mkdir -p .build
 	docker-compose down
 	docker-compose up -d
 	sleep 10
-	sh -c "docker-compose exec -T ipfs ipfs config --json -- API.HTTPHeaders.Access-Control-Allow-Origin '[\"http://127.0.0.1:3000\", \"http://localhost:3000\"]'"
+	sh -c "docker-compose exec -T ipfs ipfs config \
+		--json -- API.HTTPHeaders.Access-Control-Allow-Origin '[\"*\"]'"
 	sh -c "docker-compose exec -T ipfs ipfs config --json -- Addresses.Swarm '[]'"
 	sh -c "docker-compose exec -T ipfs ipfs config --json -- Bootstrap '[]'"
 	docker-compose restart ipfs
