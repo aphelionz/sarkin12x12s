@@ -1,7 +1,7 @@
 const fs = require('fs')
 
 const bs58 = require('bs58')
-const { ethers, network, upgrades } = require('hardhat')
+const { ethers } = require('hardhat')
 const { create, globSource } = require('ipfs-http-client')
 
 const bs58toHex = (b58) => `0x${Buffer.from(bs58.decode(b58).slice(2)).toString('hex')}`
@@ -9,7 +9,6 @@ const bs58toHex = (b58) => `0x${Buffer.from(bs58.decode(b58).slice(2)).toString(
 const ipfs = create('http://127.0.0.1:5001')
 
 async function main () {
-  const totalGas = 0
   const [owner] = await ethers.getSigners()
 
   // TODO: Only jpg for now, other media types later
@@ -20,7 +19,7 @@ async function main () {
   const SarkinNFTs = await ethers.getContractFactory('SarkinNFTs')
   const NFTs = await SarkinNFTs.deploy()
 
-  for (let it = timestamps.values(), timestamp = null; timestamp = it.next().value;) {
+  for (let it = timestamps.values(), timestamp = null; timestamp = it.next().value;) { // eslint-disable-line
     // TODO: Better Insta handling parsing
     // Set a start date
     // Only parse things with #NFTs or some such hash tag
@@ -28,10 +27,10 @@ async function main () {
       const description = fs.readFileSync(DIR + `/${timestamp}.txt`).toString()
       const hash = await ipfs.add(globSource(DIR + `/${timestamp}.jpg`))
       const nftMetadata = {
-        title: "Asset Metadata",
-        type: "object",
+        title: 'Asset Metadata',
+        type: 'object',
         properties: {
-          name: "",
+          name: '',
           description,
           image: `${hash.cid.toString()}`
         }
@@ -55,4 +54,3 @@ main()
     console.error(error)
     process.exit(1)
   })
-

@@ -1,4 +1,4 @@
-/* global ethers */
+/* global alert, bs58, ethers, fetch, IpfsHttpClient */
 
 const { create } = IpfsHttpClient
 const client = create('http://localhost:5001')
@@ -59,15 +59,16 @@ if (window.ethereum) {
         li.appendChild(img)
 
         ul.appendChild(li)
+
+        return null
       }))
     })
     .then(console.log)
     .catch(console.error)
 } else {
   // TODO: Fix ugly alerts
-  alert('Metamask is required');
+  alert('Metamask is required')
 }
-
 
 fetch('./metadata.json')
   .then(res => res.json())

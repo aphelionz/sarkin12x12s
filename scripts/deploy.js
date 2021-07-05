@@ -1,4 +1,4 @@
-const { ethers, network, upgrades } = require('hardhat')
+const { ethers } = require('hardhat')
 
 async function main () {
   const SarkinNFTs = await ethers.getContractFactory('SarkinNFTs')
@@ -13,4 +13,3 @@ main()
     console.error(error)
     process.exit(1)
   })
-

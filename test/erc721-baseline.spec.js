@@ -1,3 +1,5 @@
+/* global ethers */
+
 const bs58 = require('bs58')
 const crypto = require('crypto')
 const CID = require('cids')
@@ -10,15 +12,15 @@ const randomCID = async () => {
 }
 
 const bs58toHex = (b58) => `0x${Buffer.from(bs58.decode(b58).slice(2)).toString('hex')}`
-const hexToBs58 = (hex) => bs58.encode(Buffer.from(`1220${hex.slice(2)}`, 'hex'))
 
 const txOptions = {}
 
-describe('ERC721 Baseline', function() {
+describe('ERC721 Baseline', function () {
   let nfts
+  let owner
 
   before(async function () {
-    [owner, addr1] = await ethers.getSigners()
+    [owner] = await ethers.getSigners()
     txOptions.gasPrice = await ethers.provider.getGasPrice()
 
     const SarkinNFTs = await ethers.getContractFactory('SarkinNFTs')
@@ -56,7 +58,7 @@ describe('ERC721 Baseline', function() {
       await tx.wait()
 
       const tokenURI = await nfts.tokenURI(tokenHex)
-      expect(tokenURI).to.equal("")
+      expect(tokenURI).to.equal('')
     })
 
     it('reports the correct owner', async () => {
@@ -89,7 +91,7 @@ describe('ERC721 Baseline', function() {
   })
 
   describe('Transfer and Approval', function () {
-/*
+    /*
 
  'Approval(address,address,uint256)': [Function (anonymous)],
  'ApprovalForAll(address,address,bool)': [Function (anonymous)],
