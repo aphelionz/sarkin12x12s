@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "lint:js": "standard",
     "test": "make test"
   },
   "repository": {
