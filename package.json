@@ -29,6 +29,10 @@
     "cids": "^1.1.7",
     "ethers": "^5.4.1",
     "hardhat": "^2.4.1",
-    "multihashing-async": "^2.1.2"
+    "multihashing-async": "^2.1.2",
+    "standard": "^16.0.3"
+  },
+  "standard": {
+    "env": ["mocha"]
   }
 }
