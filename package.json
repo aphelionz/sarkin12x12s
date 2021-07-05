@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "lint": "npm run lint:js && npm run lint:solidity",
+    "lint:solidity": "solhint 'contracts/**/*.sol'",
     "lint:js": "standard",
     "test": "make test"
   },
@@ -31,10 +33,13 @@
     "ethers": "^5.4.1",
     "hardhat": "^2.4.1",
     "multihashing-async": "^2.1.2",
+    "solhint": "^3.3.6",
     "standard": "^16.0.3"
   },
   "standard": {
-    "env": ["mocha"],
+    "env": [
+      "mocha"
+    ],
     "ignore": [
       "src/js/bs58.js",
       "src/js/buffer.js",
