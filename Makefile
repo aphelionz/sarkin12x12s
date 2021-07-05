@@ -30,6 +30,11 @@ clean:
 	rm -rf .build
 	rm -rf .ipfs
 
+# HASH := $(shell sh -c "docker-compose exec -T ipfs ipfs add -q -r /data/build | tail -1")
+deploy: test ingest build
+	export HASH=`docker-compose exec -T ipfs ipfs add -q -r /data/build | tail -1`
+	echo "Deployed to http://localhost:8080/ipfs/$$HASH"
+
 deps:
 	mkdir -p ${INSTA_DEST}
 	npm install
