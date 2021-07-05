@@ -33,7 +33,7 @@ async function main () {
         properties: {
           name: "",
           description,
-          image: `ipfs://${hash.cid.toString()}`
+          image: `${hash.cid.toString()}`
         }
       }
 

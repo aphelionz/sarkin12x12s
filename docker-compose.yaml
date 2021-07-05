@@ -3,9 +3,15 @@ services:
     image: nginx:mainline-alpine
     volumes:
       - ./src:/usr/share/nginx/html
-      - ./node_modules:/usr/share/nginx/html/node_modules
     ports:
-      - "8080:80"
+      - "3000:80"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      interval: 1m
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
 
   eth-devnet:
     image: node:lts
@@ -30,8 +36,8 @@ services:
     image: ipfs/go-ipfs:v0.9.0
     ports:
       - "5001:5001"
-#     - "4001:4001" # ipfs swarm - expose if needed/wanted
-#     - "8080:8080" # ipfs gateway - expose if needed/wanted
+      - "8080:8080"
+      # - "4001:4001" # ipfs swarm - expose if needed/wanted
     volumes:
       - ./.ipfs:/data/ipfs
       - ./.instaloader:/data/instaloader
