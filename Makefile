@@ -12,6 +12,10 @@ INSTA_ID := $(shell cat "${INSTA_DEST}"/id)
 export UID = $(shell id -u)
 export GID = $(shell id -g)
 
+build: test ingest
+	rm -rf .build/**
+	cp -r src/** .build
+
 .PHONY: test
 test: reset
 	export CONTRACT_ADDRESS=`npx hardhat run --network localhost scripts/deploy.js | tail -1`
@@ -35,6 +39,8 @@ deps:
 	browserify node_modules/ipfs-http-client > src/js/ipfs-http-client.js --standalone IpfsHttpClient
 	# TODO: venv
 	pip3 install instaloader
+
+ingest: reset ingest-metadata ingest-nfts
 
 ingest-metadata: deps
 	instaloader --fast-update --login ${INSTA_USER} ${INSTA_USER} --dirname-pattern=${INSTA_DEST}

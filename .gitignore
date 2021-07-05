@@ -4,3 +4,4 @@ node_modules
 .ipfs
 .instaloader
 .env
+.build
