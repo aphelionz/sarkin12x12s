@@ -13,7 +13,7 @@ export UID = $(shell id -u)
 export GID = $(shell id -g)
 
 .PHONY: test
-test: deps
+test: reset
 	export CONTRACT_ADDRESS=`npx hardhat run --network localhost scripts/deploy.js | tail -1`
 	npx hardhat test --network localhost
 
