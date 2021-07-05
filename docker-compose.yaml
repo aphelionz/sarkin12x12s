@@ -16,8 +16,8 @@ services:
 
   eth-devnet:
     container_name: devnet
-    image: node:lts
-    command: sh -c "apt update; apt install libsecret-1-dev -y; npx hardhat node"
+    image: node:lts-alpine
+    command: sh -c "apk add libsecret-1-dev -y; npx hardhat node"
     volumes:
       - ./hardhat.config.js:/hardhat/hardhat.config.js
       - ./package.json:/hardhat/package.json
