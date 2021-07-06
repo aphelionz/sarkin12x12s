@@ -42,9 +42,9 @@ deps:
 	python3 -m venv venv
 	./venv/bin/pip3 install instaloader
 
-ingest: reset ingest-metadata ingest-nfts
+ingest: reset instaloader ingest-nfts
 
-ingest-metadata: deps
+instaloader: deps
 	./venv/bin/instaloader \
 		--fast-update \
 		--no-videos \
