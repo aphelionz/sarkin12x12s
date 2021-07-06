@@ -22,7 +22,8 @@
   "homepage": "https://github.com/aphelionz/scrarkin#readme",
   "dependencies": {
     "@openzeppelin/contracts": "^4.2.0",
-    "ipfs-http-client": "^50.1.2"
+    "ipfs-http-client": "^50.1.2",
+    "node-html-parser": "^4.0.0"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.2",
