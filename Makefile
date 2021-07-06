@@ -11,12 +11,10 @@ endif
 export UID = $(shell id -u)
 export GID = $(shell id -g)
 
-build: test ingest
-	rm -rf .build/**
-	cp -r src/** .build
+ingest: reset instaloader ingest-nfts
 
 .PHONY: test
-test: reset
+test: reset ingest
 	export CONTRACT_ADDRESS=`npx hardhat run --network localhost scripts/deploy.js | tail -1`
 	npx hardhat test --network localhost
 
@@ -40,15 +38,16 @@ deps:
 	python3 -m venv venv
 	./venv/bin/pip3 install instaloader
 
-ingest: reset instaloader ingest-nfts
 
 instaloader: deps
 	./venv/bin/instaloader \
 		--fast-update \
 		--no-videos \
-		--login ${INSTA_USER} ${INSTA_USER} \
+		--login ${INSTA_USER} \
+		--password ${INSTA_PASS} \
 		--dirname-pattern=${INSTA_DEST} \
-		--post-filter="'nft' in caption_hashtags"
+		--post-filter="'nft' in caption_hashtags" \
+		${INSTA_USER}
 	for file in ./.instaloader/*.xz; do xz -fd "$$file"; done
 
 ingest-nfts: deps

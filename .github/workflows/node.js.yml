@@ -26,6 +26,7 @@ jobs:
       - run: npm test
         env:
           INSTA_USER: ${{ secrets.INSTA_USER }}
+          INSTA_PASS: ${{ secrets.INSTA_PASS }}
           INSTA_DEST: .instaloader
       - name: Eth logs on failure
         if: ${{ failure() }}
