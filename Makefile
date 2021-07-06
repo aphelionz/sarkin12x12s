@@ -48,7 +48,8 @@ instaloader: deps
 		--fast-update \
 		--no-videos \
 		--login ${INSTA_USER} ${INSTA_USER} \
-		--dirname-pattern=${INSTA_DEST}
+		--dirname-pattern=${INSTA_DEST} \
+		--post-filter="'nft' in caption_hashtags"
 	for file in ./.instaloader/*.xz; do xz -fd "$$file"; done
 
 ingest-nfts: deps
