@@ -12,9 +12,9 @@
     <ul id="nfts"></ul>
 
     <template id="nft">
-      <li>
+      <li data-token-id="%TOKEN_CID%">
         <h1>%TITLE%</h1>
-        <img src="//localhost:8080/ipfs/%CID%" alt="%DESC%" />
+        <img src="//localhost:8080/ipfs/%IMAGE_CID%" alt="%DESC%" />
         <button>Buy</button>
       </li>
     </template>

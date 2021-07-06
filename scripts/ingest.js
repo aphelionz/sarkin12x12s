@@ -24,12 +24,6 @@ async function main () {
       const description = fs.readFileSync(DIR + `/${timestamp}.txt`).toString()
       const hash = await ipfs.add(globSource(DIR + `/${timestamp}.jpg`))
 
-      const item = nftTemplate.innerHTML
-        .replace(/%CID%/, hash.cid.toString())
-        .replace(/%TITLE%/, timestamp)
-        .replace(/%DESC%/, description)
-
-      nftsList.appendChild(parse(item))
       const nftMetadata = {
         title: 'Asset Metadata',
         type: 'object',
@@ -41,8 +35,14 @@ async function main () {
       }
 
       const metadata = await ipfs.add(JSON.stringify(nftMetadata))
-      const mintingCID = metadata.cid.toString()
-      // console.log(mintingCID)
+
+      const item = nftTemplate.innerHTML
+        .replace(/%TOKEN_CID%/, metadata.cid.toString())
+        .replace(/%IMAGE_CID%/, hash.cid.toString())
+        .replace(/%TITLE%/, timestamp)
+        .replace(/%DESC%/, description)
+
+      nftsList.appendChild(parse(item))
     } catch (err) {
       // console.warn(err.message)
     }
