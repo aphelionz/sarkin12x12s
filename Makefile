@@ -31,7 +31,6 @@ clean:
 	rm -rf .ipfs
 	rm -rf venv
 
-# HASH := $(shell sh -c "docker-compose exec -T ipfs ipfs add -q -r /data/build | tail -1")
 deploy: test ingest build
 	export HASH=`docker-compose exec -T ipfs ipfs add -q -r /data/build | tail -1`
 	echo "Deployed to http://localhost:8080/ipfs/$$HASH"
@@ -51,8 +50,6 @@ instaloader: deps
 		--login ${INSTA_USER} ${INSTA_USER} \
 		--dirname-pattern=${INSTA_DEST}
 	for file in ./.instaloader/*.xz; do xz -fd "$$file"; done
-	# cp ${INSTA_DEST}/${INSTA_USER}_${INSTA_ID}.json ./src/metadata.json
-	# cp artifacts/contracts/721-SarkinNFTs.sol/SarkinNFTs.json ./src/artifact.json
 
 ingest-nfts: deps
 	npx hardhat run scripts/ingest.js --network localhost
