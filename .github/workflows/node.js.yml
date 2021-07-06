@@ -23,7 +23,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - run: npm ci
-      - run: npm run build --if-present
+      - run: touch ./.build/index.html
       - run: npm test
       - name: Eth logs on failure
         if: ${{ failure() }}
