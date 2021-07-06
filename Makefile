@@ -60,10 +60,4 @@ reset: clean deps
 	touch ./.build/index.html
 	docker-compose down
 	docker-compose up -d
-	sleep 3
-	sh -c "docker-compose exec -T ipfs ipfs config \
-		--json -- API.HTTPHeaders.Access-Control-Allow-Origin '[\"*\"]'"
-	sh -c "docker-compose exec -T ipfs ipfs config --json -- Addresses.Swarm '[]'"
-	sh -c "docker-compose exec -T ipfs ipfs config --json -- Bootstrap '[]'"
-	docker-compose restart ipfs
 	sleep 10
