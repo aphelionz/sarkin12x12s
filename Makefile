@@ -39,10 +39,6 @@ deploy: test ingest build
 deps:
 	mkdir -p ${INSTA_DEST}
 	npm install
-	browserify node_modules/bs58 > src/js/bs58.js --standalone bs58
-	browserify node_modules/ethers > src/js/ethers.js --standalone ethers
-	browserify node_modules/buffer > src/js/buffer.js --standalone Buffer
-	browserify node_modules/ipfs-http-client > src/js/ipfs-http-client.js --standalone IpfsHttpClient
 	python3 -m venv venv
 	./venv/bin/pip3 install instaloader
 
