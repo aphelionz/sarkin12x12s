@@ -13,11 +13,10 @@ services:
       retries: 3
       start_period: 10s
 
-
   eth-devnet:
     container_name: devnet
     image: node:lts-alpine
-    command: sh -c "apk add libsecret-1-dev -y; npx hardhat node"
+    command: sh -c "npx hardhat node"
     volumes:
       - ./hardhat.config.js:/hardhat/hardhat.config.js
       - ./package.json:/hardhat/package.json
