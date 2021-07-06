@@ -3,7 +3,7 @@ services:
     container_name: web
     image: nginx:mainline-alpine
     volumes:
-      - ./src:/usr/share/nginx/html
+      - ./.build:/usr/share/nginx/html
     ports:
       - "3000:80"
     healthcheck:
