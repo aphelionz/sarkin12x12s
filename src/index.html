@@ -5,11 +5,74 @@
     <title>Skarkin'</title>
   </head>
   <body>
-    <h1>Skarkin'</h1>
+    <metamask-login></metamask-login>
 
-    <h2>NFTs</h3>
-    <ul id="nfts">
-    </ul>
-    <script src="js/app.js"></script>
+    <h1>Skarkin'</h1>
+    <h2>NFTs</h2>
+    <ul id="nfts"></ul>
+
+    <template id="nft">
+      <li>
+        <h1>%TITLE%</h1>
+        <img src="//localhost:8080/ipfs/%CID%" alt="%DESC%" />
+        <button>Buy</button>
+      </li>
+    </template>
+
+    <script>
+      function truncateAddress (address) {
+        return `${address.substring(0, 6)}...${address.substring(address.length - 4)}`
+      }
+
+      window.onload = (e) => {
+        let contractAddress
+
+        class MetaMaskLogin extends HTMLElement {
+          constructor() {
+            super();
+            if(window.ethereum) {
+              this.attachShadow({mode: 'open'})
+
+              this.addEventListener('click', this.getAccount.bind(this))
+              window.ethereum.on('accountsChanged', this.updateButtonAccount.bind(this))
+              window.ethereum.on('chainChanged', this.handleChainChange.bind(this))
+              window.ethereum.on('message', console.log)
+
+              this.button = document.createElement('button')
+              this.updateButtonAccount([window.ethereum.selectedAddress])
+
+              this.shadowRoot.append(this.button)
+            }
+          }
+
+          async getAccount() {
+            try {
+              const accounts = await window.ethereum.request({
+                method: 'eth_requestAccounts'
+              })
+              const account = accounts[0]
+            } catch (err) {
+              console.warn(err.message)
+            }
+          }
+
+          handleChainChange(chainInfo) {
+            console.log(chainInfo)
+          }
+
+          updateButtonAccount(accounts) {
+            this.button.innerText = "Connect MetaMask"
+            this.connected = false
+
+            if(accounts && accounts[0]) {
+              this.button.innerText = truncateAddress(accounts[0])
+              this.connected = true
+            }
+          }
+        }
+
+        customElements.define('metamask-login', MetaMaskLogin)
+      }
+    </script>
   </body>
 </html>
