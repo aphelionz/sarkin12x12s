@@ -37,10 +37,10 @@ async function main () {
       const metadata = await ipfs.add(JSON.stringify(nftMetadata))
 
       const item = nftTemplate.innerHTML
-        .replace(/%TOKEN_CID%/, metadata.cid.toString())
-        .replace(/%IMAGE_CID%/, hash.cid.toString())
-        .replace(/%TITLE%/, timestamp)
-        .replace(/%DESC%/, description)
+        .replace(/%TOKEN_CID%/g, metadata.cid.toString())
+        .replace(/%IMAGE_CID%/g, hash.cid.toString())
+        .replace(/%TITLE%/g, timestamp)
+        .replace(/%DESC%/g, description)
 
       nftsList.appendChild(parse(item))
     } catch (err) {
