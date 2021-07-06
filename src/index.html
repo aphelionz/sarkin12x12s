@@ -25,7 +25,7 @@
         return `${address.substring(0, 6)}...${address.substring(address.length - 4)}`
       }
 
-      window.onload = (e) => {
+      setTimeout((e) => {
         let contractAddress
 
         class MetaMaskLogin extends HTMLElement {
@@ -73,7 +73,7 @@
         }
 
         customElements.define('metamask-login', MetaMaskLogin)
-      }
+      }, 300)
     </script>
   </body>
 </html>
