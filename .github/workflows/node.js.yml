@@ -24,6 +24,9 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm test
+        env:
+          INSTA_USER: ${{ secrets.INSTA_USER }}
+          INSTA_DEST: .instaloader
       - name: Eth logs on failure
         if: ${{ failure() }}
         run: docker-compose logs

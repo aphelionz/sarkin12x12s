@@ -6,7 +6,7 @@ const ipfs = create('http://127.0.0.1:5001')
 
 async function main () {
   // TODO: Only jpg for now, other media types later
-  const DIR = process.env.INSTA_DEST || './.instaloader'
+  const DIR = process.env.INSTA_DEST
   const files = fs.readdirSync(DIR).filter(f => f.match(/UTC\.jpg/))
   const timestamps = new Set(files.map(f => f.split('.')[0]))
 

@@ -8,7 +8,6 @@ ifneq (,$(wildcard ./.env))
     export
 endif
 
-INSTA_ID := $(shell cat "${INSTA_DEST}"/id)
 export UID = $(shell id -u)
 export GID = $(shell id -g)
 
