@@ -29,6 +29,7 @@ clean:
 	rm -rf cache
 	rm -rf .build
 	rm -rf .ipfs
+	rm -rf venv
 
 # HASH := $(shell sh -c "docker-compose exec -T ipfs ipfs add -q -r /data/build | tail -1")
 deploy: test ingest build
@@ -42,13 +43,17 @@ deps:
 	browserify node_modules/ethers > src/js/ethers.js --standalone ethers
 	browserify node_modules/buffer > src/js/buffer.js --standalone Buffer
 	browserify node_modules/ipfs-http-client > src/js/ipfs-http-client.js --standalone IpfsHttpClient
-	# TODO: venv
-	pip3 install instaloader
+	python3 -m venv venv
+	./venv/bin/pip3 install instaloader
 
 ingest: reset ingest-metadata ingest-nfts
 
 ingest-metadata: deps
-	instaloader --fast-update --login ${INSTA_USER} ${INSTA_USER} --dirname-pattern=${INSTA_DEST}
+	./venv/bin/instaloader \
+		--fast-update \
+		--no-videos \
+		--login ${INSTA_USER} ${INSTA_USER} \
+		--dirname-pattern=${INSTA_DEST}
 	for file in ./.instaloader/*.xz; do xz -fd "$$file"; done
 	cp ${INSTA_DEST}/${INSTA_USER}_${INSTA_ID}.json ./src/metadata.json
 	cp artifacts/contracts/721-SarkinNFTs.sol/SarkinNFTs.json ./src/artifact.json
