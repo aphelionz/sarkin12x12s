@@ -65,7 +65,7 @@ reset: clean deps
 	mkdir -p .build
 	docker-compose down
 	docker-compose up -d
-	sleep 10
+	sleep 3
 	sh -c "docker-compose exec -T ipfs ipfs config \
 		--json -- API.HTTPHeaders.Access-Control-Allow-Origin '[\"*\"]'"
 	sh -c "docker-compose exec -T ipfs ipfs config --json -- Addresses.Swarm '[]'"
