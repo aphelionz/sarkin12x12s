@@ -11,7 +11,7 @@ endif
 export UID = $(shell id -u)
 export GID = $(shell id -g)
 
-ingest: reset instaloader ingest-nfts
+build: clean deps instaloader ingest-nfts
 
 .PHONY: test
 test: deps
@@ -40,7 +40,7 @@ deps:
 	python3 -m venv venv
 	./venv/bin/pip3 install instaloader
 	docker-compose up -d
-
+	sleep 10
 
 instaloader:
 	./venv/bin/instaloader \
@@ -55,8 +55,3 @@ instaloader:
 
 ingest-nfts: deps
 	npx hardhat run scripts/ingest.js --network localhost
-
-reset: clean deps
-	docker-compose down
-	docker-compose up -d
-	sleep 10
