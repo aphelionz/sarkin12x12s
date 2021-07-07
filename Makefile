@@ -14,7 +14,7 @@ export GID = $(shell id -g)
 ingest: reset instaloader ingest-nfts
 
 .PHONY: test
-test: reset ingest
+test: deps
 	export CONTRACT_ADDRESS=`npx hardhat run --network localhost scripts/deploy.js | tail -1`
 	npx hardhat test --network localhost
 
@@ -34,12 +34,15 @@ deploy: test ingest build
 
 deps:
 	mkdir -p ${INSTA_DEST}
+	mkdir -p .build
+	touch ./.build/index.html
 	npm install
 	python3 -m venv venv
 	./venv/bin/pip3 install instaloader
+	docker-compose up -d
 
 
-instaloader: deps
+instaloader:
 	./venv/bin/instaloader \
 		--fast-update \
 		--no-videos \
@@ -54,8 +57,6 @@ ingest-nfts: deps
 	npx hardhat run scripts/ingest.js --network localhost
 
 reset: clean deps
-	mkdir -p .build
-	touch ./.build/index.html
 	docker-compose down
 	docker-compose up -d
 	sleep 10
