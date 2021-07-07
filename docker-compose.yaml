@@ -16,9 +16,8 @@ services:
   eth-devnet:
     container_name: devnet
     image: node:lts-alpine
-    command: sh -c "npx hardhat node"
+    command: sh -c "npx hardhat node --show-stack-traces"
     volumes:
-      - ./.env:/hardhat/.env
       - ./hardhat.config.js:/hardhat/hardhat.config.js
       - ./package.json:/hardhat/package.json
       - ./node_modules:/hardhat/node_modules
@@ -26,6 +25,8 @@ services:
     working_dir: /hardhat
     ports:
       - '8545:8545'
+    environment:
+      ALCHEMY_MAINNET_RPC_URL: "$ALCHEMY_MAINNET_RPC_URL"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8545"]
       interval: 1m

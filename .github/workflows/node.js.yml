@@ -24,6 +24,8 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm test
+        env:
+          ALCHEMY_MAINNET_RPC_URL: ${{ secrets.ALCHEMY_MAINNET_RPC_URL }}
       - name: Eth logs on failure
         if: ${{ failure() }}
         run: docker-compose logs
