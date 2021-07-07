@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/aphelionz/scrarkin#readme",
   "dependencies": {
+    "@chainlink/contracts": "^0.2.0",
     "@openzeppelin/contracts": "^4.2.0",
     "dotenv": "^10.0.0",
     "ipfs-http-client": "^50.1.2",
