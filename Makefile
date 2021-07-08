@@ -9,6 +9,9 @@ ifneq (,$(wildcard ./.env))
 endif
 
 build: clean deps instaloader ingest-nfts
+	cp -r ./src/js .build/js
+	cp -r ./src/css .build/css
+	cp ./src/favicon.ico .build
 
 .PHONY: test
 test: deps
