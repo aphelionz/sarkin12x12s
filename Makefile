@@ -8,9 +8,6 @@ ifneq (,$(wildcard ./.env))
     export
 endif
 
-export UID = $(shell id -u)
-export GID = $(shell id -g)
-
 build: clean deps instaloader ingest-nfts
 
 .PHONY: test
