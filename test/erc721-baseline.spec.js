@@ -113,8 +113,8 @@ describe('ERC721 Baseline', function () {
       const finalBalance = await ethers.provider.getBalance(acct1.address)
       const contractBalance = await ethers.provider.getBalance(CONTRACT_ADDRESS)
 
-      expect(contractBalance.sub(startingBalance)).to.equal(value)
-      expect(finalBalance).to.be.below(initialBalance.sub(value))
+      expect(contractBalance.sub(startingBalance)).to.deep.equal(value)
+      expect(finalBalance.lte(initialBalance.sub(value))).to.equal(true)
     })
 
     it.skip('fails when trying to purchase with less ETH', async () => {
