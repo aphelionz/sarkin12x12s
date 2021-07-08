@@ -4,7 +4,7 @@ const { create, globSource } = require('ipfs-http-client')
 
 const ipfs = create('http://127.0.0.1:5001')
 
-async function ingest (instaloaderFolder, htmlTemplate) {
+async function ingest (instaloaderFolder, htmlTemplate, contractAddress) {
   // TODO: Only jpg for now, other media types later
   const files = fs.readdirSync(instaloaderFolder)
     .filter(f => f.match(/UTC\.jpg/))
@@ -39,6 +39,7 @@ async function ingest (instaloaderFolder, htmlTemplate) {
         .replace(/%IMAGE_CID%/g, hash.cid.toString())
         .replace(/%TITLE%/g, timestamp)
         .replace(/%DESC%/g, description)
+        .replace(/%CONTRACT_ADDRESS%/g, contractAddress)
 
       nftsList.appendChild(parse(item))
     } catch (err) {
