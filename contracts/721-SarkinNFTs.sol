@@ -29,6 +29,9 @@ contract SarkinNFTs is ERC721 {
         _safeMint(to, uint256(cid), "{id}");
     }
 
+    function purchase() public payable {
+    }
+
     function getLatestPrice() public view returns (int) {
       (
         uint80 roundID,

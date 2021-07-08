@@ -19,10 +19,10 @@ const txOptions = {}
 
 describe('ERC721 Baseline', function () {
   let nfts
-  let owner
+  let acct1, owner
 
   before(async function () {
-    [owner] = await ethers.getSigners()
+    [owner, acct1] = await ethers.getSigners()
     txOptions.gasPrice = await ethers.provider.getGasPrice()
 
     const SarkinNFTs = await ethers.getContractFactory('SarkinNFTs')
@@ -89,6 +89,38 @@ describe('ERC721 Baseline', function () {
       const filter = nfts.filters.Transfer()
       const events = await nfts.queryFilter(filter)
       expect(events.length).to.be.at.least(3)
+    })
+  })
+
+  describe('Purchasing', function () {
+    let startingBalance, value
+
+    before(async () => {
+      startingBalance = await ethers.provider.getBalance(CONTRACT_ADDRESS)
+
+      // ~$90 in USD
+      value = await nfts.getLatestPrice()
+    })
+
+    it('purchases with the right amount of ETH', async () => {
+      const initialBalance = await ethers.provider.getBalance(acct1.address)
+      txOptions.gasLimit = await nfts.connect(acct1).estimateGas.purchase({ value })
+      txOptions.value = value
+
+      const tx = await nfts.connect(acct1).purchase(txOptions)
+      await tx.wait()
+
+      const finalBalance = await ethers.provider.getBalance(acct1.address)
+      const contractBalance = await ethers.provider.getBalance(CONTRACT_ADDRESS)
+
+      expect(contractBalance.sub(startingBalance)).to.equal(value)
+      expect(finalBalance).to.be.below(initialBalance.sub(value))
+    })
+
+    it.skip('fails when trying to purchase with less ETH', async () => {
+    })
+
+    it.skip('fails when trying to purchase with more ETH', async () => {
     })
   })
 
