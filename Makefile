@@ -1,8 +1,4 @@
-export SHELL:=/bin/bash
-
-.ONESHELL:
-
-# Include env file
+# Include env file if it exists
 ifneq (,$(wildcard ./.env))
     include .env
     export
@@ -27,10 +23,6 @@ clean:
 	rm -rf .build
 	rm -rf .ipfs
 	rm -rf venv
-
-deploy: test ingest build
-	export HASH=`docker-compose exec -T ipfs ipfs add -q -r /data/build | tail -1`
-	echo "Deployed to http://localhost:8080/ipfs/$$HASH"
 
 deps:
 	mkdir -p ${INSTA_DEST}
