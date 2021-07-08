@@ -10,8 +10,7 @@ build: clean deps instaloader ingest-nfts
 	cp ./src/favicon.ico .build
 
 .PHONY: test
-test: deps
-	export CONTRACT_ADDRESS=`npx hardhat run --network localhost scripts/deploy.js | tail -1`
+test: clean deps
 	npx hardhat test --network localhost
 
 clean:
@@ -33,6 +32,7 @@ deps:
 	./venv/bin/pip3 install instaloader
 	docker-compose up -d
 	sleep 10
+	npx hardhat run --network localhost scripts/deploy.js
 
 instaloader:
 	./venv/bin/instaloader \

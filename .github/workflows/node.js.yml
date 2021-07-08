@@ -25,6 +25,8 @@ jobs:
       - run: npm ci
       - run: npm test
         env:
+          CONTRACT_ADDRESS: "0x70e0bA845a1A0F2DA3359C97E0285013525FFC49"
+          INSTA_DEST: ".instaloader"
           ALCHEMY_MAINNET_RPC_URL: ${{ secrets.ALCHEMY_MAINNET_RPC_URL }}
       - name: Eth logs on failure
         if: ${{ failure() }}

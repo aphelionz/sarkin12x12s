@@ -6,6 +6,8 @@ const CID = require('cids')
 const { expect } = require('chai')
 const multihashing = require('multihashing-async')
 
+const { CONTRACT_ADDRESS } = process.env
+
 const randomCID = async () => {
   const randomHash = await multihashing(crypto.randomBytes(Math.random() * 100000), 'sha2-256')
   return (new CID(0, 'dag-pb', Buffer.from(randomHash)))
@@ -24,7 +26,7 @@ describe('ERC721 Baseline', function () {
     txOptions.gasPrice = await ethers.provider.getGasPrice()
 
     const SarkinNFTs = await ethers.getContractFactory('SarkinNFTs')
-    nfts = SarkinNFTs.attach(process.env.CONTRACT_ADDRESS)
+    nfts = SarkinNFTs.attach(CONTRACT_ADDRESS)
   })
 
   describe('Details', function () {
