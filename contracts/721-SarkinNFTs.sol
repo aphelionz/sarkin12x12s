@@ -7,6 +7,7 @@ import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 contract SarkinNFTs is ERC721 {
     address private immutable _owner;
     AggregatorV3Interface internal priceFeed;
+    int256 _priceInUSD;
 
     /**
      * Network: Mainnet
@@ -15,6 +16,7 @@ contract SarkinNFTs is ERC721 {
      */
     constructor() ERC721("Jon Sarkin", "SRK") {
         _owner = msg.sender;
+        _priceInUSD = 0x7ce66c50e2840000; // $90
         priceFeed = AggregatorV3Interface(0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419);
     }
 
@@ -37,6 +39,6 @@ contract SarkinNFTs is ERC721 {
       ) = priceFeed.latestRoundData();
       // If the round is not complete yet, timestamp is 0
       require(timeStamp > 0, "Round not complete");
-      return price;
+      return _priceInUSD / price;
     }
 }
