@@ -16,7 +16,7 @@ contract SarkinNFTs is ERC721 {
      */
     constructor() ERC721("Jon Sarkin", "SRK") {
         _owner = payable(msg.sender);
-        _priceInUSD = 0x7ce66c50e2840000; // $90
+        _priceInUSD = 0x1D14A0219E54822428000000; // $90
         priceFeed = AggregatorV3Interface(0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419);
     }
 

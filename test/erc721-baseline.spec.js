@@ -186,7 +186,7 @@ describe('ERC721 Baseline', function () {
   describe('Chainlink price feed', function () {
     it('returns the latest ETH/USD price for pinned USD amount', async () => {
       const latestPrice = await nfts.getLatestPrice()
-      console.log(`The current price of $90 in ETH is ${latestPrice.toString()} GWEI`)
+      console.log(`The current price of $90 in ETH is ${latestPrice.toString()} WEI`)
     })
   })
 
