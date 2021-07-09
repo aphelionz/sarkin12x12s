@@ -5,7 +5,7 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
 contract SarkinNFTs is ERC721 {
-    address private immutable _owner;
+    address payable private immutable _owner;
     AggregatorV3Interface internal priceFeed;
     int256 _priceInUSD;
 
@@ -15,7 +15,7 @@ contract SarkinNFTs is ERC721 {
      * Address: 0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419
      */
     constructor() ERC721("Jon Sarkin", "SRK") {
-        _owner = msg.sender;
+        _owner = payable(msg.sender);
         _priceInUSD = 0x7ce66c50e2840000; // $90
         priceFeed = AggregatorV3Interface(0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419);
     }
@@ -35,6 +35,8 @@ contract SarkinNFTs is ERC721 {
       require(msg.value > 0, "Not enough ETH");
       require(int(msg.value) >= latestPrice, "Not enough ETH");
       require(int(msg.value) < latestPrice + 1000000, "Too much ETH");
+
+      _owner.transfer(msg.value);
     }
 
     function getLatestPrice() public view returns (int) {

@@ -96,13 +96,13 @@ describe('ERC721 Baseline', function () {
     let startingBalance, value
 
     before(async () => {
-      startingBalance = await ethers.provider.getBalance(CONTRACT_ADDRESS)
+      startingBalance = await ethers.provider.getBalance(owner.address)
 
       // ~$90 in USD
       value = await nfts.getLatestPrice()
     })
 
-    it('purchases with the right amount of ETH', async () => {
+    it('accepts the correct amount of ETH', async () => {
       const initialBalance = await ethers.provider.getBalance(acct1.address)
       txOptions.gasLimit = await nfts.connect(acct1).estimateGas.purchase({ value })
       txOptions.value = value
@@ -111,10 +111,12 @@ describe('ERC721 Baseline', function () {
       await tx.wait()
 
       const finalBalance = await ethers.provider.getBalance(acct1.address)
-      const contractBalance = await ethers.provider.getBalance(CONTRACT_ADDRESS)
-
-      expect(contractBalance.sub(startingBalance)).to.deep.equal(value)
       expect(finalBalance.lte(initialBalance.sub(value))).to.equal(true)
+    })
+
+    it('passes the ETH through to the contract owner', async () => {
+      const newOwnerBalance = await ethers.provider.getBalance(owner.address)
+      expect(newOwnerBalance.sub(startingBalance)).to.deep.equal(value)
     })
 
     it('fails when trying to purchase with not enough ETH', async () => {
