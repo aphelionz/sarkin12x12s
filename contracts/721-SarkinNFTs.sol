@@ -30,6 +30,11 @@ contract SarkinNFTs is ERC721 {
     }
 
     function purchase() public payable {
+      int latestPrice = getLatestPrice();
+
+      require(msg.value > 0, "Not enough ETH");
+      require(int(msg.value) >= latestPrice, "Not enough ETH");
+      require(int(msg.value) < latestPrice + 1000000, "Too much ETH");
     }
 
     function getLatestPrice() public view returns (int) {

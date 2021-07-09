@@ -117,10 +117,36 @@ describe('ERC721 Baseline', function () {
       expect(finalBalance.lte(initialBalance.sub(value))).to.equal(true)
     })
 
-    it.skip('fails when trying to purchase with less ETH', async () => {
+    it('fails when trying to purchase with not enough ETH', async () => {
+      const adjustedAmount = value.sub(7000000)
+
+      try {
+        txOptions.gasLimit = await nfts.connect(acct1)
+          .estimateGas.purchase({ value: adjustedAmount })
+        txOptions.value = adjustedAmount
+        const tx = await nfts.connect(acct1).purchase(txOptions)
+        await tx.wait()
+
+        expect(false).to.equal(true)
+      } catch (e) {
+        expect(e.message).to.contain('Not enough ETH')
+      }
     })
 
-    it.skip('fails when trying to purchase with more ETH', async () => {
+    it('fails when trying to purchase with more ETH', async () => {
+      const adjustedAmount = value.add(2000000)
+
+      try {
+        txOptions.gasLimit = await nfts.connect(acct1)
+          .estimateGas.purchase({ value: adjustedAmount })
+        txOptions.value = adjustedAmount
+        const tx = await nfts.connect(acct1).purchase(txOptions)
+        await tx.wait()
+
+        expect(false).to.equal(true)
+      } catch (e) {
+        expect(e.message).to.contain('Too much ETH')
+      }
     })
   })
 
