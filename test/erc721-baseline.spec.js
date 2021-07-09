@@ -93,21 +93,27 @@ describe('ERC721 Baseline', function () {
   })
 
   describe('Purchasing', function () {
-    let startingBalance, value
+    let startingBalance, tokenHex, value
 
     before(async () => {
-      startingBalance = await ethers.provider.getBalance(owner.address)
-
       // ~$90 in USD
       value = await nfts.getLatestPrice()
+
+      const tokenCID = await randomCID()
+      tokenHex = bs58toHex(tokenCID.toString())
+      const tx = await nfts.mint(owner.address, tokenHex)
+      await tx.wait()
+
+      startingBalance = await ethers.provider.getBalance(owner.address)
     })
 
     it('accepts the correct amount of ETH', async () => {
       const initialBalance = await ethers.provider.getBalance(acct1.address)
-      txOptions.gasLimit = await nfts.connect(acct1).estimateGas.purchase({ value })
+      txOptions.gasLimit = await nfts.connect(acct1)
+        .estimateGas.purchase(tokenHex, { value })
       txOptions.value = value
 
-      const tx = await nfts.connect(acct1).purchase(txOptions)
+      const tx = await nfts.connect(acct1).purchase(tokenHex, txOptions)
       await tx.wait()
 
       const finalBalance = await ethers.provider.getBalance(acct1.address)
@@ -116,7 +122,15 @@ describe('ERC721 Baseline', function () {
 
     it('passes the ETH through to the contract owner', async () => {
       const newOwnerBalance = await ethers.provider.getBalance(owner.address)
+      console.log(startingBalance.toString())
+      console.log(value.toString())
+      console.log(newOwnerBalance.toString())
       expect(newOwnerBalance.sub(startingBalance)).to.deep.equal(value)
+    })
+
+    it('transfers the NFT to acct1 upon purchase', async () => {
+      const acct1NFTBalance = await nfts.balanceOf(acct1.address)
+      expect(acct1NFTBalance.gt(0)).to.equal(true)
     })
 
     it('fails when trying to purchase with not enough ETH', async () => {
@@ -124,9 +138,9 @@ describe('ERC721 Baseline', function () {
 
       try {
         txOptions.gasLimit = await nfts.connect(acct1)
-          .estimateGas.purchase({ value: adjustedAmount })
+          .estimateGas.purchase(tokenHex, { value: adjustedAmount })
         txOptions.value = adjustedAmount
-        const tx = await nfts.connect(acct1).purchase(txOptions)
+        const tx = await nfts.connect(acct1).purchase(tokenHex, txOptions)
         await tx.wait()
 
         expect(false).to.equal(true)
@@ -140,9 +154,9 @@ describe('ERC721 Baseline', function () {
 
       try {
         txOptions.gasLimit = await nfts.connect(acct1)
-          .estimateGas.purchase({ value: adjustedAmount })
+          .estimateGas.purchase(tokenHex, { value: adjustedAmount })
         txOptions.value = adjustedAmount
-        const tx = await nfts.connect(acct1).purchase(txOptions)
+        const tx = await nfts.connect(acct1).purchase(tokenHex, txOptions)
         await tx.wait()
 
         expect(false).to.equal(true)

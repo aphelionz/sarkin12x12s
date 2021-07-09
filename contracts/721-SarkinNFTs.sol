@@ -29,13 +29,14 @@ contract SarkinNFTs is ERC721 {
         _safeMint(to, uint256(cid), "{id}");
     }
 
-    function purchase() public payable {
+    function purchase(bytes32 cid) public payable {
       int latestPrice = getLatestPrice();
 
       require(msg.value > 0, "Not enough ETH");
       require(int(msg.value) >= latestPrice, "Not enough ETH");
       require(int(msg.value) < latestPrice + 1000000, "Too much ETH");
 
+      _safeTransfer(_owner, msg.sender, uint256(cid), "");
       _owner.transfer(msg.value);
     }
 
