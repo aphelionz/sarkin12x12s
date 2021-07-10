@@ -40,7 +40,7 @@ instaloader:
 		--no-videos \
 		--login ${INSTA_USER} \
 		--password ${INSTA_PASS} \
-		--dirname-pattern=${INSTA_DEST} \
+		--dirname-pattern=.instaloader \
 		--post-filter="'nft' in caption_hashtags" \
 		${INSTA_USER}
 	for file in ./.instaloader/*.xz; do xz -fd "$$file"; done
