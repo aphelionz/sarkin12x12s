@@ -4,10 +4,8 @@ ifneq (,$(wildcard ./.env))
     export
 endif
 
-build: clean deps instaloader ingest-nfts
-	cp -r ./src/js .build/js
-	cp -r ./src/css .build/css
-	cp ./src/favicon.ico .build
+watch: node_modules .build instaloader
+	npx nodemon --watch src -e js,html,css --exec make .build
 
 .PHONY: test
 test: clean deps

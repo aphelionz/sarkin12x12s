@@ -36,6 +36,7 @@
     "ethers": "^5.4.1",
     "hardhat": "^2.4.1",
     "multihashing-async": "^2.1.2",
+    "nodemon": "^2.0.12",
     "solhint": "^3.3.6",
     "standard": "^16.0.3"
   },
