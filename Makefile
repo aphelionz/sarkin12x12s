@@ -23,18 +23,22 @@ clean:
 	rm -rf .ipfs
 	rm -rf venv
 
-deps:
-	mkdir -p ${INSTA_DEST}
-	mkdir -p .build
-	touch ./.build/index.html
+node_modules:
 	npm install
+
+venv:
 	python3 -m venv venv
 	./venv/bin/pip3 install instaloader
-	docker-compose up -d
-	sleep 10
-	npx hardhat run --network localhost scripts/deploy.js
 
-instaloader:
+.build:
+	mkdir -p .build
+	touch ./.build/index.html
+	cp -r ./src/js .build/js
+	cp -r ./src/css .build/css
+	cp ./src/favicon.ico .build
+
+.instaloader:
+	mkdir -p .instaloader
 	./venv/bin/instaloader \
 		--fast-update \
 		--no-videos \
@@ -45,5 +49,10 @@ instaloader:
 		${INSTA_USER}
 	for file in ./.instaloader/*.xz; do xz -fd "$$file"; done
 
-ingest-nfts: deps
+deps: node_modules venv .build
+	docker-compose up -d
+	sleep 5
+	npx hardhat run --network localhost scripts/deploy.js
+
+ingest-nfts: node_modules .build
 	npx hardhat run scripts/ingest.js --network localhost
