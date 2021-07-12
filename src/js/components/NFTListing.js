@@ -4,10 +4,7 @@ const CONTRACT_ADDRESS = document.querySelector('#nfts').dataset.address
 const ABI = JSON.parse(document.querySelector('#abi').innerText)
 const provider = new ethers.providers.Web3Provider(window.ethereum)
 
-// eslint-disable-next-line
-function getCurrentFilter () {
-  return window.location.hash
-}
+import { truncateAddress } from '../utils.js'
 
 export class NFTListing extends HTMLElement {
   constructor () {

@@ -1,8 +1,6 @@
 /* global HTMLElement */
 
-function truncateAddress (address) {
-  return `${address.substring(0, 6)}...${address.substring(address.length - 4)}`
-}
+import { truncateAddress } from '../utils.js'
 
 export class MetaMaskLogin extends HTMLElement {
   constructor () {
