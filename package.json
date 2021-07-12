@@ -1,5 +1,5 @@
 {
-  "name": "scrarkin",
+  "name": "sarkin12x12s",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,15 +11,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aphelionz/scrarkin.git"
+    "url": "git+https://github.com/aphelionz/sarkin12x12s.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/aphelionz/scrarkin/issues"
+    "url": "https://github.com/aphelionz/sarkin12x12s/issues"
   },
-  "homepage": "https://github.com/aphelionz/scrarkin#readme",
+  "homepage": "https://github.com/aphelionz/sarkin12x12s#readme",
   "dependencies": {
     "@chainlink/contracts": "^0.2.0",
     "@openzeppelin/contracts": "^4.2.0",
