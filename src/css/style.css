@@ -1,11 +1,12 @@
 :root {
+  --text-color: #cfcacf;
   --thumbnail-size: 260px;
 }
 
 body {
   font-family: Helvetica, sans-serif;
   background-color: #101310;
-  color: #cfcacf;
+  color: var(--text-color);
 }
 body a { color: #afa0af; }
 
