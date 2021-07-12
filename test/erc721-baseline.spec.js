@@ -20,6 +20,8 @@ describe('ERC721 Baseline', function () {
   let nfts
   let acct1, owner
 
+  this.timeout(0)
+
   before(async function () {
     [owner, acct1] = await ethers.getSigners()
     txOptions.gasPrice = await ethers.provider.getGasPrice()
