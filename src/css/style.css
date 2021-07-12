@@ -32,7 +32,14 @@ nft-listing:hover { opacity: 1; }
 header { position: relative; }
 header metamask-login {
   position: absolute;
-  top: 0; right: 0;
+  top: 0; right: 1rem;
+}
+header metamask-login button {
+  border: 1px solid var(--text-color);
+  border-radius: 4px;
+  padding: 0.5rem;
+  background: transparent;
+  color: var(--text-color);
 }
 header h1 { margin-bottom: 0.5rem; }
 header h2 { margin-top: 0; margin-bottom: 3rem; font-size: 16px; }

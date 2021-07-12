@@ -5,18 +5,21 @@ import { truncateAddress } from '../utils.js'
 export class MetaMaskLogin extends HTMLElement {
   constructor () {
     super()
+
+    const template = document.createElement('template')
+    template.innerHTML = '<slot name="button"></slot>'
+
     if (window.ethereum) {
       this.attachShadow({ mode: 'open' })
+      this.shadowRoot.append(template.content.cloneNode(true))
 
       this.addEventListener('click', this.getAccount.bind(this))
       window.ethereum.on('accountsChanged', this.updateSigner.bind(this))
       window.ethereum.on('chainChanged', this.handleChainChange.bind(this))
       window.ethereum.on('message', console.log)
 
-      this.button = document.createElement('button')
+      this.button = this.querySelector('button')
       this.updateSigner([window.ethereum.selectedAddress])
-
-      this.shadowRoot.append(this.button)
     }
   }
 
