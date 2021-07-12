@@ -9,6 +9,9 @@ body {
 }
 body a { color: #afa0af; }
 
+body > nav { margin: 0.5rem 0; }
+body > nav a:not(.active) { text-decoration: none; color: #9f909f; }
+
 nft-listing {
   float: left;
   width: var(--thumbnail-size);

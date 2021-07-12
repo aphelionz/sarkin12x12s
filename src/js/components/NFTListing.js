@@ -10,14 +10,8 @@ export class NFTListing extends HTMLElement {
   constructor () {
     super()
 
-    document.addEventListener('transfers', (e) => {
-      this.updateAttributes(e.detail)
-      this.filterSelf()
-    })
-
-    document.addEventListener('price', (e) => {
-      this.updatePrice(e.detail)
-    })
+    document.addEventListener('transfers', (e) => this.updateAttributes(e.detail))
+    document.addEventListener('price', (e) => this.updatePrice(e.detail))
 
     this.attachShadow({ mode: 'open' })
 
@@ -61,22 +55,28 @@ export class NFTListing extends HTMLElement {
   }
 
   updateAttributes (events) {
+    this.removeAttribute('yours')
+    this.removeAttribute('owner')
+
     const owner = events
       .filter(e => e.args.tokenId.toHexString() === this.id)
       .filter(e => !ethers.BigNumber.from(e.args.from).isZero())
       .map(e => e.args.to)
       .pop()
 
-    if (owner) {
-      this.setAttribute('owner', owner || null)
-      const nftButton = this.shadowRoot.querySelector('button.nft')
-      nftButton?.remove()
+    if (!owner) return
+
+    this.setAttribute('owner', owner)
+
+    if(ethers.BigNumber.from(owner).eq(ethers.BigNumber.from(window.ethereum.selectedAddress))) {
+      this.setAttribute('yours', true)
     }
   }
 
   updatePrice (priceInWei) {
     const priceInETH = (priceInWei / (10 ** 18)).toFixed(4)
     const nftButton = this.shadowRoot.querySelector('button.nft')
+    const owner = this.getAttribute('owner') !== 'undefined' ? this.getAttribute('owner') : false
 
     if (nftButton) {
       if (owner) {
@@ -86,6 +86,4 @@ export class NFTListing extends HTMLElement {
       }
     }
   }
-
-  filterSelf () {}
 }

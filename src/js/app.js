@@ -6,6 +6,24 @@ import { NFTListing } from './components/NFTListing.js'
 const CONTRACT_ADDRESS = document.querySelector('#nfts').dataset.address
 const ABI = JSON.parse(document.querySelector('#abi').innerText)
 
+if(window.location.hash === '') {
+  window.location.hash = 'available'
+}
+
+window.addEventListener('hashchange', (function updateNFTList () {
+  const hash = window.location.hash.substr(1)
+  const nftList = document.querySelector('#nfts')
+
+  document.querySelectorAll('body > nav a').forEach(el => {
+    el.classList.remove('active')
+    nftList.classList.remove(el.href.split('#')[1])
+  })
+  document.querySelector(`body > nav a[href="#${hash}"]`).classList.add('active')
+  nftList.classList.add(hash)
+
+  return updateNFTList
+})())
+
 setTimeout(async (e) => {
   customElements.define('metamask-login', MetaMaskLogin)
   customElements.define('nft-listing', NFTListing)
