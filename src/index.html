@@ -1,85 +1,27 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Skarkin'</title>
+<meta charset="utf-8">
+<title>The Jon Sarkin 12x12s</title>
 
-    <script src="./js/ethers.umd.min.js"></script>
-  </head>
-  <body>
-    <metamask-login></metamask-login>
+<link rel="stylesheet" href="./css/style.css">
+<script src="./js/ethers.umd.min.js"></script>
 
-    <h1>Skarkin'</h1>
-    <h2>NFTs</h2>
-    <ul id="nfts"></ul>
+<header>
+  <h1>The Jon Sarkin 12x12s</h1>
+  <metamask-login></metamask-login>
+</header>
 
-    <template id="nft">
-      <li data-token-id="%TOKEN_CID%">
-        <h1>%TITLE%</h1>
-        <img src="//localhost:8080/ipfs/%IMAGE_CID%" alt="%DESC%" />
-        <p>%DESC%</p>
-        <button>Buy</button>
-      </li>
-    </template>
+<!-- <nav>
+  <a href="#fresh">Fresh 12x12s</a>
+  <a href="#secondary">Secondary Market</a>
+  <a href="#yours">Your 12x12s</a>
+</nav> -->
 
-    <script>
-      const CONTRACT_ADDRESS="%CONTRACT_ADDRESS%"
-      const provider = new ethers.providers.Web3Provider(window.ethereum)
+<div data-address="%CONTRACT_ADDRESS%" class="nfts" id="nfts"></div>
 
+<footer>
+  Images and Words Copyright 2021 Jon Sarkin.
 
-      function truncateAddress (address) {
-        return `${address.substring(0, 6)}...${address.substring(address.length - 4)}`
-      }
+  Contract and front-end code on GitHub
+</footer>
 
-      setTimeout((e) => {
-        let contractAddress
-
-        class MetaMaskLogin extends HTMLElement {
-          constructor() {
-            super();
-            if(window.ethereum) {
-              this.attachShadow({mode: 'open'})
-
-              this.addEventListener('click', this.getAccount.bind(this))
-              window.ethereum.on('accountsChanged', this.updateButtonAccount.bind(this))
-              window.ethereum.on('chainChanged', this.handleChainChange.bind(this))
-              window.ethereum.on('message', console.log)
-
-              this.button = document.createElement('button')
-              this.updateButtonAccount([window.ethereum.selectedAddress])
-
-              this.shadowRoot.append(this.button)
-            }
-          }
-
-          async getAccount() {
-            try {
-              const accounts = await window.ethereum.request({
-                method: 'eth_requestAccounts'
-              })
-              const account = accounts[0]
-            } catch (err) {
-              console.warn(err.message)
-            }
-          }
-
-          handleChainChange(chainInfo) {
-            console.log(chainInfo)
-          }
-
-          updateButtonAccount(accounts) {
-            this.button.innerText = "Connect MetaMask"
-            this.connected = false
-
-            if(accounts && accounts[0]) {
-              this.button.innerText = truncateAddress(accounts[0])
-              this.connected = true
-            }
-          }
-        }
-
-        customElements.define('metamask-login', MetaMaskLogin)
-      }, 300)
-    </script>
-  </body>
-</html>
+<script type="module" src="./js/app.js"></script>
