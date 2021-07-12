@@ -27,8 +27,18 @@ export class NFTListing extends HTMLElement {
     this.shadowRoot.append(img)
 
     const nftButton = document.createElement('button')
-    nftButton.innerText = 'Buy NFT'
+    nftButton.innerText = ''
     nftButton.classList.add('nft')
+    nftButton.style.position = 'absolute'
+    nftButton.style.bottom = '0'
+    nftButton.style.left = '0'
+    nftButton.style.background = '#000000c3'
+    nftButton.style.width = '100%'
+    nftButton.style.color = '#fff0ff'
+    nftButton.style.border = 'none'
+    nftButton.style.fontWeight = 'bold'
+    nftButton.style.paddingTop = '0.5rem'
+    nftButton.style.paddingBottom = '0.5rem'
     nftButton.addEventListener('click', this.buyNFT.bind(this))
     this.shadowRoot.append(nftButton)
   }
@@ -69,7 +79,11 @@ export class NFTListing extends HTMLElement {
     const nftButton = this.shadowRoot.querySelector('button.nft')
 
     if (nftButton) {
-      nftButton.innerText = `Buy NFT for ${priceInETH} ETH`
+      if (owner) {
+        nftButton.innerText = `Owned by ${truncateAddress(owner)}`
+      } else {
+        nftButton.innerText = `Available: Ξ${priceInETH}`
+      }
     }
   }
 

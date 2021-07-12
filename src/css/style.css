@@ -1,25 +1,24 @@
+:root {
+  --thumbnail-size: 260px;
+}
+
 body {
   font-family: Helvetica, sans-serif;
-  background-color: #202120;
-  color: #cfcecf;
+  background-color: #101310;
+  color: #cfcacf;
 }
-body a { color: #afa; }
+body a { color: #afa0af; }
 
-.nfts {
-  max-width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+nft-listing {
+  float: left;
+  width: var(--thumbnail-size);
+  margin: 1rem 1rem 0 0;
+  height: var(--thumbnail-size);
+  overflow: hidden;
+  position: relative;
+  opacity: 0.65;
 }
-
-.nfts > nft-listing {
-  padding: 1rem;
-  background-color: #00000099;
-}
-
-.nfts img {
-  max-width: 100%;
-  max-height: 100%;
-}
+nft-listing:hover { opacity: 1; }
 
 .nfts button span {
   pointer-events: none;
