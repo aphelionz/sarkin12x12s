@@ -66,6 +66,7 @@ export class NFTListing extends HTMLElement {
       .pop()
 
     if (!owner) return
+    if (!window.ethereum.selectedAddress) return
 
     this.setAttribute('owner', owner)
 
