@@ -1,8 +1,12 @@
 const fs = require('fs')
+
+const bs58 = require('bs58')
 const { parse } = require('node-html-parser')
 const { create, globSource } = require('ipfs-http-client')
 
 const ipfs = create('http://127.0.0.1:5001')
+
+const bs58toHex = (b58) => `0x${Buffer.from(bs58.decode(b58).slice(2)).toString('hex')}`
 
 async function ingest (instaloaderFolder, htmlTemplate, contractAddress) {
   // TODO: Only jpg for now, other media types later
@@ -50,5 +54,6 @@ async function ingest (instaloaderFolder, htmlTemplate, contractAddress) {
 }
 
 module.exports = {
+  bs58toHex,
   ingest
 }

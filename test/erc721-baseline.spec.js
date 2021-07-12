@@ -1,10 +1,11 @@
 /* global ethers */
 
-const bs58 = require('bs58')
 const crypto = require('crypto')
 const CID = require('cids')
 const { expect } = require('chai')
 const multihashing = require('multihashing-async')
+
+const { bs58toHex } = require('../scripts/utils')
 
 const { CONTRACT_ADDRESS } = process.env
 
@@ -12,8 +13,6 @@ const randomCID = async () => {
   const randomHash = await multihashing(crypto.randomBytes(Math.random() * 100000), 'sha2-256')
   return (new CID(0, 'dag-pb', Buffer.from(randomHash)))
 }
-
-const bs58toHex = (b58) => `0x${Buffer.from(bs58.decode(b58).slice(2)).toString('hex')}`
 
 const txOptions = {}
 
