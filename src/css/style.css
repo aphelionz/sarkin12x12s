@@ -20,15 +20,18 @@ nft-listing {
 }
 nft-listing:hover { opacity: 1; }
 
-.nfts button span {
-  pointer-events: none;
-}
+.nfts > nft-listing { display: none; }
+.nfts.available > nft-listing:not([owner]) { display: block; }
+.nfts.yours > nft-listing[yours] { display: block; }
+.nfts.all > nft-listing { display: block; }
 
 header { position: relative; }
 header metamask-login {
   position: absolute;
   top: 0; right: 0;
 }
+header h1 { margin-bottom: 0.5rem; }
+header h2 { margin-top: 0; margin-bottom: 3rem; font-size: 16px; }
 
 footer {
   clear: both;
