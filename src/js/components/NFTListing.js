@@ -1,10 +1,10 @@
 /* global ethers, HTMLElement */
 
+import { truncateAddress } from '../utils.js'
+
 const CONTRACT_ADDRESS = document.querySelector('#nfts').dataset.address
 const ABI = JSON.parse(document.querySelector('#abi').innerText)
 const provider = new ethers.providers.Web3Provider(window.ethereum)
-
-import { truncateAddress } from '../utils.js'
 
 export class NFTListing extends HTMLElement {
   constructor () {
@@ -68,7 +68,7 @@ export class NFTListing extends HTMLElement {
 
     this.setAttribute('owner', owner)
 
-    if(ethers.BigNumber.from(owner).eq(ethers.BigNumber.from(window.ethereum.selectedAddress))) {
+    if (ethers.BigNumber.from(owner).eq(ethers.BigNumber.from(window.ethereum.selectedAddress))) {
       this.setAttribute('yours', true)
     }
   }

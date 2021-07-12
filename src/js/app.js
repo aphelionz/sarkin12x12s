@@ -6,7 +6,7 @@ import { NFTListing } from './components/NFTListing.js'
 const CONTRACT_ADDRESS = document.querySelector('#nfts').dataset.address
 const ABI = JSON.parse(document.querySelector('#abi').innerText)
 
-if(window.location.hash === '') {
+if (window.location.hash === '') {
   window.location.hash = 'available'
 }
 
