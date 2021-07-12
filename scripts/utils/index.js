@@ -25,18 +25,15 @@ async function ingest (instaloaderFolder, htmlTemplate, contractAddress) {
     // Only parse things with #NFTs or some such hash tag
     try {
       const nftTemplate = parse('<nft-listing></nft-listing>').firstChild
-      const description = fs
-        .readFileSync(instaloaderFolder + `/${timestamp}.txt`).toString().trim()
+      const description = ''
+      // const description = fs
+      //   .readFileSync(instaloaderFolder + `/${timestamp}.txt`).toString().trim()
       const hash = await ipfs.add(globSource(instaloaderFolder + `/${timestamp}.jpg`))
 
       const nftMetadata = {
-        title: 'Asset Metadata',
-        type: 'object',
-        properties: {
-          name: '',
-          description,
-          image: `${hash.cid.toString()}`
-        }
+        name: timestamp,
+        description,
+        image: `${hash.cid.toString()}`
       }
 
       const metadata = await ipfs.add(JSON.stringify(nftMetadata))
@@ -44,7 +41,7 @@ async function ingest (instaloaderFolder, htmlTemplate, contractAddress) {
       nftTemplate.setAttributes({
         id: bs58toHex(metadata.cid.toString()),
         'image-src': hash.cid.toString(),
-        title: timestamp,
+        name: timestamp,
         description
       })
 
