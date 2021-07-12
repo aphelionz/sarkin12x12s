@@ -30,9 +30,8 @@ header metamask-login {
   top: 0; right: 0;
 }
 
-button {
-  background: none;
-  color: #afa;
-  border-width: 0 0 2px 2px;
-  border-color: #afa;
+footer {
+  clear: both;
+  font-size: 13px;
+  padding-top: 3rem;
 }
