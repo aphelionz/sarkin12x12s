@@ -3,6 +3,7 @@
 import { truncateAddress } from '../utils.js'
 
 const CONTRACT_ADDRESS = document.querySelector('#nfts').dataset.address
+const IPFS_GATEWAY_URL = document.querySelector('#nfts').dataset.gateway
 const ABI = JSON.parse(document.querySelector('#abi').innerText)
 const provider = new ethers.providers.Web3Provider(window.ethereum)
 
@@ -16,7 +17,7 @@ export class NFTListing extends HTMLElement {
     this.attachShadow({ mode: 'open' })
 
     const img = document.createElement('img')
-    img.src = `http://localhost:8080/ipfs/${this.getAttribute('image-src')}`
+    img.src = `${IPFS_GATEWAY_URL}${this.getAttribute('image-src')}`
     img.style.maxWidth = '100%'
     this.shadowRoot.append(img)
 

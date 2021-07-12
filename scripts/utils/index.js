@@ -4,7 +4,7 @@ const bs58 = require('bs58')
 const { parse } = require('node-html-parser')
 const { create, globSource } = require('ipfs-http-client')
 
-const ipfs = create('http://127.0.0.1:5001')
+const ipfs = create(process.env.IPFS_API_URL)
 
 const bs58toHex = (b58) => `0x${Buffer.from(bs58.decode(b58).slice(2)).toString('hex')}`
 
@@ -51,6 +51,7 @@ async function ingest (instaloaderFolder, htmlTemplate, contractAddress) {
     }
   }
 
+  root.innerHTML = root.innerHTML.replace(/%IPFS_GATEWAY_URL%/g, process.env.IPFS_GATEWAY_URL)
   root.innerHTML = root.innerHTML.replace(/%CONTRACT_ADDRESS%/g, contractAddress)
   const abiScriptTag = parse(`<script id="abi" type="application/json">${JSON.stringify(abi)}</script>`)
   root.appendChild(abiScriptTag)
