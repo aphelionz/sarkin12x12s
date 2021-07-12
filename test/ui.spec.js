@@ -12,10 +12,31 @@ describe('UI', function () {
   })
 
   describe('Built HTML', function () {
-    it('lists as many NFTs are are ingested', async () => {
+    let builtHTML
+
+    before(async () => {
+      const contractAddress = process.env.CONTRACT_ADDRESS
       const template = fs.readFileSync('./src/index.html')
-      const builtHTML = await ingest('./test/fixtures', template)
-      expect(builtHTML.querySelectorAll('#nfts li').length).to.equal(2)
+      builtHTML = await ingest('./test/fixtures', template, contractAddress)
+    })
+
+    it('lists as many NFTs are are ingested', async () => {
+      expect(builtHTML.querySelectorAll('nft-listing').length).to.equal(2)
+    })
+
+    it('contains the abi in a script tag', async () => {
+      try {
+        const abiScriptTag = builtHTML.querySelector('script#abi')
+        JSON.parse(abiScriptTag.innerText)
+      } catch (e) {
+        console.log(e.message)
+        expect(false).to.equal(true)
+      }
+    })
+
+    it('contains the contract address in the html string', async () => {
+      expect(process.env.CONTRACT_ADDRESS.length).to.be.above(0)
+      expect(builtHTML.toString()).to.contain(process.env.CONTRACT_ADDRESS)
     })
   })
 })

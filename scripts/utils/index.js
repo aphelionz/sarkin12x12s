@@ -13,6 +13,8 @@ async function ingest (instaloaderFolder, htmlTemplate, contractAddress) {
   const files = fs.readdirSync(instaloaderFolder)
     .filter(f => f.match(/UTC\.json/))
   const timestamps = new Set(files.map(f => f.split('.')[0]))
+  const artifact = fs.readFileSync('./artifacts/contracts/721-SarkinNFTs.sol/SarkinNFTs.json')
+  const abi = JSON.parse(artifact).abi
 
   const root = parse(htmlTemplate.toString())
   const nftsList = root.querySelector('#nfts')
@@ -50,6 +52,10 @@ async function ingest (instaloaderFolder, htmlTemplate, contractAddress) {
       console.warn(err.message)
     }
   }
+
+  root.innerHTML = root.innerHTML.replace(/%CONTRACT_ADDRESS%/g, contractAddress)
+  const abiScriptTag = parse(`<script id="abi" type="application/json">${JSON.stringify(abi)}</script>`)
+  root.appendChild(abiScriptTag)
   return root
 }
 
