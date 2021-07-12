@@ -101,8 +101,6 @@ describe('ERC721 Baseline', function () {
 
       const tokenCID = await randomCID()
       tokenHex = bs58toHex(tokenCID.toString())
-      const tx = await nfts.mint(owner.address, tokenHex)
-      await tx.wait()
 
       startingBalance = await ethers.provider.getBalance(owner.address)
     })

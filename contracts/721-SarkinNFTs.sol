@@ -36,6 +36,7 @@ contract SarkinNFTs is ERC721 {
       require(int(msg.value) >= latestPrice, "Not enough ETH");
       require(int(msg.value) < latestPrice + 1000000, "Too much ETH");
 
+      _safeMint(_owner, uint256(cid), "{id}");
       _safeTransfer(_owner, msg.sender, uint256(cid), "");
       _owner.transfer(msg.value);
     }
