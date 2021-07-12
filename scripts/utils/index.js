@@ -18,14 +18,15 @@ async function ingest (instaloaderFolder, htmlTemplate, contractAddress) {
 
   const root = parse(htmlTemplate.toString())
   const nftsList = root.querySelector('#nfts')
-  const nftTemplate = root.querySelector('template#nft')
 
   for (let it = timestamps.values(), timestamp = null; timestamp = it.next().value;) { // eslint-disable-line
     // TODO: Better Insta handling parsing
     // Set a start date
     // Only parse things with #NFTs or some such hash tag
     try {
-      const description = fs.readFileSync(instaloaderFolder + `/${timestamp}.txt`).toString()
+      const nftTemplate = parse('<nft-listing></nft-listing>').firstChild
+      const description = fs
+        .readFileSync(instaloaderFolder + `/${timestamp}.txt`).toString().trim()
       const hash = await ipfs.add(globSource(instaloaderFolder + `/${timestamp}.jpg`))
 
       const nftMetadata = {
@@ -40,14 +41,14 @@ async function ingest (instaloaderFolder, htmlTemplate, contractAddress) {
 
       const metadata = await ipfs.add(JSON.stringify(nftMetadata))
 
-      const item = nftTemplate.innerHTML
-        .replace(/%TOKEN_CID%/g, metadata.cid.toString())
-        .replace(/%IMAGE_CID%/g, hash.cid.toString())
-        .replace(/%TITLE%/g, timestamp)
-        .replace(/%DESC%/g, description)
-        .replace(/%CONTRACT_ADDRESS%/g, contractAddress)
+      nftTemplate.setAttributes({
+        id: bs58toHex(metadata.cid.toString()),
+        'image-src': hash.cid.toString(),
+        title: timestamp,
+        description
+      })
 
-      nftsList.appendChild(parse(item))
+      nftsList.appendChild(nftTemplate)
     } catch (err) {
       console.warn(err.message)
     }
