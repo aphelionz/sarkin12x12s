@@ -57,5 +57,5 @@ deps: node_modules venv .build cache
 	sleep 5
 	npx hardhat run --network localhost scripts/deploy.js
 
-ingest-nfts: node_modules .build
+ingest-nfts: node_modules .build .instaloader
 	npx hardhat run scripts/ingest.js --network localhost
