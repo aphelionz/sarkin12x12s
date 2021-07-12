@@ -31,12 +31,14 @@ venv:
 	./venv/bin/pip3 install instaloader
 	./venv/bin/pip3 install html-linter
 
-.build:
+.build: artifacts
 	mkdir -p .build
-	touch ./.build/index.html
-	cp -r ./src/js .build/js
-	cp -r ./src/css .build/css
-	cp ./src/favicon.ico .build
+	cp artifacts/contracts/721-SarkinNFTs.sol/SarkinNFTs.json .build/artifact.json
+	cp -vr src/** .build/
+
+artifacts cache:
+	npx hardhat compile
+
 
 .instaloader:
 	mkdir -p .instaloader
@@ -50,7 +52,7 @@ venv:
 		${INSTA_USER}
 	for file in ./.instaloader/*.xz; do xz -fd "$$file"; done
 
-deps: node_modules venv .build
+deps: node_modules venv .build cache
 	docker-compose up -d
 	sleep 5
 	npx hardhat run --network localhost scripts/deploy.js
