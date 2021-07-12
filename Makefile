@@ -4,8 +4,10 @@ ifneq (,$(wildcard ./.env))
     export
 endif
 
-watch: node_modules .build instaloader
-	npx nodemon --watch src -e js,html,css --exec make .build
+watch: node_modules .build .instaloader
+	./venv/bin/html_lint.py src/index.html
+	npx nodemon --watch src -e js,html,css --exec "sh -c" \
+		"cp -r src/** .build && npx hardhat run scripts/ingest.js --network localhost"
 
 .PHONY: test
 test: clean deps
@@ -27,6 +29,7 @@ node_modules:
 venv:
 	python3 -m venv venv
 	./venv/bin/pip3 install instaloader
+	./venv/bin/pip3 install html-linter
 
 .build:
 	mkdir -p .build
