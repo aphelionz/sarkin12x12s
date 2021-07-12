@@ -45,5 +45,5 @@ setTimeout(async (e) => {
     })
 
     return fetchPrice
-  })(), 10000)
+  })(), 5000)
 }, 500)
