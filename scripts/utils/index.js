@@ -11,7 +11,7 @@ const bs58toHex = (b58) => `0x${Buffer.from(bs58.decode(b58).slice(2)).toString(
 async function ingest (instaloaderFolder, htmlTemplate, contractAddress) {
   // TODO: Only jpg for now, other media types later
   const files = fs.readdirSync(instaloaderFolder)
-    .filter(f => f.match(/UTC\.jpg/))
+    .filter(f => f.match(/UTC\.json/))
   const timestamps = new Set(files.map(f => f.split('.')[0]))
 
   const root = parse(htmlTemplate.toString())
