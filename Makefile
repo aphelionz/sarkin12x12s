@@ -56,7 +56,7 @@ artifacts cache:
 		--login ${INSTA_USER} \
 		--password ${INSTA_PASS} \
 		--dirname-pattern=.instaloader \
-		--post-filter="'nft' in caption_hashtags" \
+		--post-filter="'12x12' in caption_hashtags" \
 		${INSTA_USER}
 	for file in ./.instaloader/*.xz; do xz -fd "$$file"; done
 
