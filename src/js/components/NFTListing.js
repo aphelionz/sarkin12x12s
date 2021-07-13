@@ -2,7 +2,7 @@
 
 import { truncateAddress } from '../utils.js'
 
-const CONTRACT_ADDRESS = document.querySelector('#nfts').dataset.address
+const CONTRACT_ADDRESS = document.querySelector('#nfts').dataset.contract
 const IPFS_GATEWAY_URL = document.querySelector('#nfts').dataset.gateway
 const ABI = JSON.parse(document.querySelector('#abi').innerText)
 const provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -20,6 +20,8 @@ export class NFTListing extends HTMLElement {
     img.src = `${IPFS_GATEWAY_URL}${this.getAttribute('image-src')}`
     img.style.maxWidth = '100%'
     this.shadowRoot.append(img)
+
+    this.priceInWei = 0
 
     const nftButton = document.createElement('button')
     nftButton.innerText = ''
@@ -45,7 +47,7 @@ export class NFTListing extends HTMLElement {
 
     try {
       const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, provider.getSigner())
-      const value = (await contract.functions.getLatestPrice())[0]
+      const value = this.priceInWei
 
       const gasPrice = await provider.getGasPrice()
       const gasLimit = await contract.estimateGas.purchase(cid, { value })
@@ -76,7 +78,8 @@ export class NFTListing extends HTMLElement {
   }
 
   updatePrice (priceInWei) {
-    const priceInETH = (priceInWei / (10 ** 18)).toFixed(4)
+    this.priceInWei = priceInWei
+    const priceInETH = (this.priceInWei / (10 ** 18)).toFixed(4)
     const nftButton = this.shadowRoot.querySelector('button.nft')
     const owner = this.getAttribute('owner') !== 'undefined' ? this.getAttribute('owner') : false
 

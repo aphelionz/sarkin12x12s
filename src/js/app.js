@@ -3,8 +3,10 @@
 import { MetaMaskLogin } from './components/MetaMaskLogin.js'
 import { NFTListing } from './components/NFTListing.js'
 
-const CONTRACT_ADDRESS = document.querySelector('#nfts').dataset.address
+const CONTRACT_ADDRESS = document.querySelector('#nfts').dataset.contract
+const CHAINLINK_ADDRESS = document.querySelector('#nfts').dataset.chainlink
 const ABI = JSON.parse(document.querySelector('#abi').innerText)
+const CHAINLINK_ABI = JSON.parse(document.querySelector('#chainlinkAbi').innerText)
 
 if (window.location.hash === '') {
   window.location.hash = 'available'
@@ -38,8 +40,9 @@ setTimeout(async (e) => {
       document.dispatchEvent(transfersEvent)
     })
 
-    contract.functions.getLatestPrice().then(res => {
-      const wei = parseInt(res[0].toString(), 10)
+    const chainlinkAggregator = new ethers.Contract(CHAINLINK_ADDRESS, CHAINLINK_ABI, provider)
+    chainlinkAggregator.functions.latestRoundData().then(res => {
+      const wei = ethers.BigNumber.from('0x1D14A0219E54822428000000').div(res.answer)
       const priceEvent = new CustomEvent('price', { detail: wei })
       document.dispatchEvent(priceEvent)
     })
