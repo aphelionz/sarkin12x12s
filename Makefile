@@ -4,6 +4,11 @@ ifneq (,$(wildcard ./.env))
     export
 endif
 
+deps: node_modules venv .build cache
+	docker-compose up -d
+	sleep 5
+	npx hardhat run --network localhost scripts/deploy.js
+
 watch: node_modules .build .instaloader
 	./venv/bin/html_lint.py src/index.html
 	npx nodemon --watch src -e js,html,css --exec "sh -c" \
@@ -51,11 +56,6 @@ artifacts cache:
 		--post-filter="'nft' in caption_hashtags" \
 		${INSTA_USER}
 	for file in ./.instaloader/*.xz; do xz -fd "$$file"; done
-
-deps: node_modules venv .build cache
-	docker-compose up -d
-	sleep 5
-	npx hardhat run --network localhost scripts/deploy.js
 
 ingest-nfts: node_modules .build .instaloader
 	npx hardhat run scripts/ingest.js --network localhost
