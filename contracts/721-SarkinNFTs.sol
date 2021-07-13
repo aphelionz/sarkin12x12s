@@ -33,15 +33,15 @@ contract SarkinNFTs is ERC721 {
       uint latestPrice = getLatestPrice();
 
       require(msg.value > 0, "Not enough ETH");
-      require(int(msg.value) >= latestPrice, "Not enough ETH");
-      require(int(msg.value) < latestPrice + 1000000, "Too much ETH");
+      require(msg.value >= latestPrice, "Not enough ETH");
+      require(msg.value < latestPrice + 1000000, "Too much ETH");
 
-      _safeMint(_owner, uint256(cid), "{id}");
-      _safeTransfer(_owner, msg.sender, uint256(cid), "");
+      emit Transfer(address(0x0), _owner, cid);
+      _safeMint(msg.sender, cid, "{id}");
       _owner.transfer(msg.value);
     }
 
-    function getLatestPrice() public view returns (int) {
+    function getLatestPrice() internal view returns (uint) {
       (
         /* uint80 roundID */,
         int price,
@@ -51,6 +51,6 @@ contract SarkinNFTs is ERC721 {
       ) = priceFeed.latestRoundData();
       // If the round is not complete yet, timestamp is 0
       require(timeStamp > 0, "Round not complete");
-      return _priceInUSD / price;
+      return _priceInUSD / uint(price);
     }
 }

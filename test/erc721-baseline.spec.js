@@ -3,8 +3,9 @@
 const crypto = require('crypto')
 const CID = require('cids')
 const { expect } = require('chai')
+const { BigNumber } = require('ethers')
 const multihashing = require('multihashing-async')
-
+const AggregatorV3Abi = require('@chainlink/contracts/abi/v0.8/AggregatorV3Interface.json')
 const { bs58toHex } = require('../scripts/utils')
 
 const { CONTRACT_ADDRESS } = process.env
@@ -19,12 +20,16 @@ const txOptions = {}
 describe('ERC721 Baseline', function () {
   let nfts
   let acct1, owner
+  let chainlinkAggregator
 
   this.timeout(0)
 
   before(async function () {
     [owner, acct1] = await ethers.getSigners()
     txOptions.gasPrice = await ethers.provider.getGasPrice()
+
+    chainlinkAggregator = new ethers
+      .Contract(process.env.CHAINLINK_ADDRESS, AggregatorV3Abi, owner)
 
     const SarkinNFTs = await ethers.getContractFactory('SarkinNFTs')
     nfts = SarkinNFTs.attach(CONTRACT_ADDRESS)
@@ -98,7 +103,8 @@ describe('ERC721 Baseline', function () {
 
     before(async () => {
       // ~$90 in USD
-      value = await nfts.getLatestPrice()
+      const latestPrice = (await chainlinkAggregator.latestRoundData()).answer
+      value = BigNumber.from('0x1D14A0219E54822428000000').div(latestPrice)
 
       const tokenCID = await randomCID()
       tokenHex = bs58toHex(tokenCID.toString())
@@ -184,8 +190,9 @@ describe('ERC721 Baseline', function () {
 
   describe('Chainlink price feed', function () {
     it('returns the latest ETH/USD price for pinned USD amount', async () => {
-      const latestPrice = await nfts.getLatestPrice()
-      console.log(`The current price of $90 in ETH is ${latestPrice.toString()} WEI`)
+      const latestPrice = (await chainlinkAggregator.latestRoundData()).answer
+      const ninetyInWei = BigNumber.from('0x1D14A0219E54822428000000').div(latestPrice)
+      console.log(`The current price of $90 in ETH is ${ninetyInWei.toString()} WEI`)
     })
   })
 
