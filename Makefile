@@ -4,6 +4,8 @@ ifneq (,$(wildcard ./.env))
     export
 endif
 
+all: deps .instaloader ingest-nfts
+
 deps: node_modules venv .build cache
 	docker-compose up -d
 	sleep 5
