@@ -6,8 +6,8 @@ import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
 contract SarkinNFTs is ERC721 {
     address payable private immutable _owner;
-    AggregatorV3Interface internal priceFeed;
-    int256 _priceInUSD;
+    AggregatorV3Interface internal immutable priceFeed;
+    uint256 immutable _priceInUSD;
 
     /**
      * Network: Mainnet
