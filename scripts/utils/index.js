@@ -55,6 +55,8 @@ async function ingest (instaloaderFolder, htmlTemplate) {
     }
   }
 
+  nftsList.childNodes.reverse()
+
   root.innerHTML = root.innerHTML.replace(/%VERSION%/g, packageInfo.version)
   root.innerHTML = root.innerHTML.replace(/%IPFS_GATEWAY_URL%/g, process.env.IPFS_GATEWAY_URL)
   root.innerHTML = root.innerHTML.replace(/%CONTRACT_ADDRESS%/g, process.env.CONTRACT_ADDRESS)
