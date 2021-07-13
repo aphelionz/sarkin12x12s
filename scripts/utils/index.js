@@ -6,6 +6,8 @@ const { create, globSource } = require('ipfs-http-client')
 
 const AggregatorV3Abi = require('@chainlink/contracts/abi/v0.8/AggregatorV3Interface.json')
 
+const packageInfo = require('../../package.json')
+
 const ipfs = create(process.env.IPFS_API_URL)
 
 const bs58toHex = (b58) => `0x${Buffer.from(bs58.decode(b58).slice(2)).toString('hex')}`
@@ -53,6 +55,7 @@ async function ingest (instaloaderFolder, htmlTemplate) {
     }
   }
 
+  root.innerHTML = root.innerHTML.replace(/%VERSION%/g, packageInfo.version)
   root.innerHTML = root.innerHTML.replace(/%IPFS_GATEWAY_URL%/g, process.env.IPFS_GATEWAY_URL)
   root.innerHTML = root.innerHTML.replace(/%CONTRACT_ADDRESS%/g, process.env.CONTRACT_ADDRESS)
   root.innerHTML = root.innerHTML.replace(/%CHAINLINK_ADDRESS%/g, process.env.CHAINLINK_ADDRESS)
