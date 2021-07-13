@@ -13,16 +13,24 @@ body a { color: #afa0af; }
 body > nav { margin: 0.5rem 0; }
 body > nav a:not(.active) { text-decoration: none; color: #9f909f; }
 
+.nfts {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+@media screen and (min-width: 1050px) {
+  .nfts { grid-template-columns: 1fr 1fr 1fr 1fr 1fr; }
+}
+@media screen and (max-width: 700px) {
+  .nfts { grid-template-columns: 1fr 1fr; }
+}
+@media screen and (max-width: 420px) {
+  .nfts { grid-template-columns: 1fr; }
+}
+
 nft-listing {
-  float: left;
-  width: var(--thumbnail-size);
-  margin: 1rem 1rem 0 0;
-  height: var(--thumbnail-size);
   overflow: hidden;
   position: relative;
-  opacity: 0.65;
 }
-nft-listing:hover { opacity: 1; }
 
 .nfts > nft-listing { display: none; }
 .nfts.available > nft-listing:not([owner]) { display: block; }
@@ -30,9 +38,12 @@ nft-listing:hover { opacity: 1; }
 .nfts.all > nft-listing { display: block; }
 
 header { position: relative; }
-header metamask-login {
+header aside {
   position: absolute;
   top: 0; right: 1rem;
+  text-align: center;
+  font-size: 14px;
+  line-height: 2rem;
 }
 header metamask-login button {
   border: 1px solid var(--text-color);
@@ -42,7 +53,12 @@ header metamask-login button {
   color: var(--text-color);
 }
 header h1 { margin-bottom: 0.5rem; }
-header h2 { margin-top: 0; margin-bottom: 3rem; font-size: 16px; }
+header h2 {
+  margin-top: 0;
+  margin-bottom: 3rem;
+  font-size: 16px;
+  max-width: 65%;
+}
 
 footer {
   clear: both;
