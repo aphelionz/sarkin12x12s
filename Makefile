@@ -8,7 +8,7 @@ all: deps deploy-contract .instaloader ingest-nfts
 
 deps: node_modules venv .build cache
 	docker-compose up -d
-	sleep 5
+	sleep 10
 
 deploy-contract:
 	npx hardhat run --network localhost scripts/deploy.js
