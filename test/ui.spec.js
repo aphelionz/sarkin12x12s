@@ -15,9 +15,8 @@ describe('UI', function () {
     let builtHTML
 
     before(async () => {
-      const contractAddress = process.env.CONTRACT_ADDRESS
       const template = fs.readFileSync('./src/index.html')
-      builtHTML = await ingest('./test/fixtures', template, contractAddress)
+      builtHTML = await ingest('./test/fixtures', template)
     })
 
     it('lists as many NFTs are are ingested', async () => {
