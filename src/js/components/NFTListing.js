@@ -1,7 +1,5 @@
 /* global ethers, HTMLElement */
 
-import { weiToEth, truncateAddress } from '../utils.js'
-
 const CONTRACT_ADDRESS = document.querySelector('#nfts').dataset.contract
 const IPFS_GATEWAY_URL = document.querySelector('#nfts').dataset.gateway
 const ABI = JSON.parse(document.querySelector('#abi').innerText)
@@ -12,7 +10,6 @@ export class NFTListing extends HTMLElement {
     super()
 
     document.addEventListener('transfers', (e) => this.updateAttributes(e.detail))
-    document.addEventListener('price', (e) => this.updatePrice(e.detail))
 
     this.attachShadow({ mode: 'open' })
 

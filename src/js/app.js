@@ -1,6 +1,5 @@
 /* global customElements, CustomEvent, ethers  */
 
-import { weiToEth } from './utils.js'
 import { MetaMaskLogin } from './components/MetaMaskLogin.js'
 import { NFTListing } from './components/NFTListing.js'
 
@@ -8,6 +7,10 @@ const CONTRACT_ADDRESS = document.querySelector('#nfts').dataset.contract
 const CHAINLINK_ADDRESS = document.querySelector('#nfts').dataset.chainlink
 const ABI = JSON.parse(document.querySelector('#abi').innerText)
 const CHAINLINK_ABI = JSON.parse(document.querySelector('#chainlinkAbi').innerText)
+
+function weiToEth (wei) {
+  return (wei / (10 ** 18)).toFixed(4)
+}
 
 if (window.location.hash === '') {
   window.location.hash = 'available'
