@@ -47,10 +47,10 @@ export class NFTListing extends HTMLElement {
       .pop()
 
     if (!owner) return
-    if (!window.ethereum.selectedAddress) return
 
     this.setAttribute('owner', owner)
 
+    if (!window.ethereum.selectedAddress) return
     if (ethers.BigNumber.from(owner).eq(ethers.BigNumber.from(window.ethereum.selectedAddress))) {
       this.setAttribute('yours', true)
     }
