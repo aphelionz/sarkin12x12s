@@ -25,6 +25,10 @@ jobs:
       - run: npm ci
       - run: mkdir -p .build && touch .build/index.html
       - run: docker-compose up -d && sleep 10
+        env:
+          KEYS_OWNER: ${{ secrets.KEYS_OWNER }}
+          KEYS_ACCT1: ${{ secrets.KEYS_ACCT1 }}
+          ALCHEMY_MAINNET_RPC_URL: ${{ secrets.ALCHEMY_MAINNET_RPC_URL }}
       - run: npx hardhat test --network localhost
         env:
           IPFS_GATEWAY_URL: http://127.0.0.1:8080/ipfs/
@@ -32,9 +36,9 @@ jobs:
           CHAINLINK_ADDRESS: "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419"
           CONTRACT_ADDRESS: "0x70e0bA845a1A0F2DA3359C97E0285013525FFC49"
           INSTA_DEST: ".instaloader"
-          ALCHEMY_MAINNET_RPC_URL: ${{ secrets.ALCHEMY_MAINNET_RPC_URL }}
           KEYS_OWNER: ${{ secrets.KEYS_OWNER }}
           KEYS_ACCT1: ${{ secrets.KEYS_ACCT1 }}
+          ALCHEMY_MAINNET_RPC_URL: ${{ secrets.ALCHEMY_MAINNET_RPC_URL }}
       - name: Eth logs on failure
         if: ${{ failure() }}
         run: docker-compose logs
