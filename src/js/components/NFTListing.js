@@ -1,6 +1,6 @@
 /* global ethers, HTMLElement */
 
-import { truncateAddress } from '../utils.js'
+import { weiToEth, truncateAddress } from '../utils.js'
 
 const CONTRACT_ADDRESS = document.querySelector('#nfts').dataset.contract
 const IPFS_GATEWAY_URL = document.querySelector('#nfts').dataset.gateway
@@ -79,7 +79,7 @@ export class NFTListing extends HTMLElement {
 
   updatePrice (priceInWei) {
     this.priceInWei = priceInWei
-    const priceInETH = (this.priceInWei / (10 ** 18)).toFixed(4)
+    const priceInETH = weiToEth(this.priceInWei)
     const nftButton = this.shadowRoot.querySelector('button.nft')
     const owner = this.getAttribute('owner') !== 'undefined' ? this.getAttribute('owner') : false
 

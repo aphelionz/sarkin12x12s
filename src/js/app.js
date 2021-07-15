@@ -1,5 +1,6 @@
 /* global customElements, CustomEvent, ethers  */
 
+import { weiToEth } from './utils.js'
 import { MetaMaskLogin } from './components/MetaMaskLogin.js'
 import { NFTListing } from './components/NFTListing.js'
 
@@ -43,6 +44,7 @@ setTimeout(async (e) => {
     const chainlinkAggregator = new ethers.Contract(CHAINLINK_ADDRESS, CHAINLINK_ABI, provider)
     chainlinkAggregator.functions.latestRoundData().then(res => {
       const wei = ethers.BigNumber.from('0x1D14A0219E54822428000000').div(res.answer)
+      document.querySelector('var').innerText = weiToEth(wei)
       const priceEvent = new CustomEvent('price', { detail: wei })
       document.dispatchEvent(priceEvent)
     })
