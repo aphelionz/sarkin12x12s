@@ -33,6 +33,17 @@ setTimeout(async (e) => {
 
   const provider = new ethers.providers.Web3Provider(window.ethereum)
 
+  document.querySelector('button#buy-random').addEventListener('click', async () => {
+    const array = new Uint32Array(1)
+    const selection = window.crypto.getRandomValues(array)[0] % 113
+    const cid = document.querySelectorAll('nft-listing')[selection].id
+
+    const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, provider.getSigner())
+    const gasPrice = await provider.getGasPrice()
+    const gasLimit = await contract.estimateGas.purchase(cid, { value: window.priceInWei })
+    await contract.purchase(cid, { gasPrice, gasLimit, value: window.priceInWei })
+  })
+
   setInterval((function fetchPrice () {
     const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, provider)
     const filter = contract.filters.Transfer()

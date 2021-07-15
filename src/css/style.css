@@ -10,10 +10,36 @@ body {
 }
 body a { color: #afa0af; }
 
-body > nav { margin: 0.5rem 0; }
-body > nav a:not(.active) { text-decoration: none; color: #9f909f; }
+body > nav { margin: 0.5rem 0.75rem; position: relative; }
+body > nav a { margin-left: 0.25rem; }
+body > nav a:not(.active) {
+  text-decoration: none;
+  color: #9f909f;
+}
+
+body > nav { line-height: 2rem; text-align: right; }
+
+body > nav form { float: left; }
+
+@media screen and (max-width: 420px) {
+  body > nav form {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    background-color: black;
+    width: 100%;
+    text-align: center;
+  }
+
+  body > nav form button {
+    width: 96%;
+    margin: 2%;
+  }
+}
 
 .nfts {
+  clear: both;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
 }
@@ -45,7 +71,8 @@ header aside {
   font-size: 14px;
   line-height: 2rem;
 }
-header metamask-login button {
+
+button {
   border: 1px solid var(--text-color);
   border-radius: 4px;
   padding: 0.5rem;
