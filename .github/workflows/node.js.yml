@@ -29,6 +29,7 @@ jobs:
           KEYS_OWNER: ${{ secrets.KEYS_OWNER }}
           KEYS_ACCT1: ${{ secrets.KEYS_ACCT1 }}
           ALCHEMY_MAINNET_RPC_URL: ${{ secrets.ALCHEMY_MAINNET_RPC_URL }}
+      - run: npx hardhat run scripts/deploy.js --network localhost
       - run: npx hardhat test --network localhost
         env:
           IPFS_GATEWAY_URL: http://127.0.0.1:8080/ipfs/
