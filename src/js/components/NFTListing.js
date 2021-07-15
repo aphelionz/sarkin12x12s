@@ -9,7 +9,7 @@ export class NFTListing extends HTMLElement {
   constructor () {
     super()
 
-    document.addEventListener('transfers', (e) => this.updateAttributes(e.detail))
+    document.addEventListener('transfers', (e) => this.updateAttributes(this.id, e.detail))
 
     this.attachShadow({ mode: 'open' })
 
@@ -37,13 +37,12 @@ export class NFTListing extends HTMLElement {
     }
   }
 
-  updateAttributes (events) {
+  updateAttributes (id, events) {
     this.removeAttribute('yours')
     this.removeAttribute('owner')
 
     const owner = events
-      .filter(e => e.args.tokenId.toHexString() === this.id)
-      .filter(e => !ethers.BigNumber.from(e.args.from).isZero())
+      .filter(e => e.args.tokenId.toHexString() === id)
       .map(e => e.args.to)
       .pop()
 
