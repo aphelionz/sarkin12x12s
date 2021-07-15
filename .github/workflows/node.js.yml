@@ -23,7 +23,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - run: npm ci
-      - run: docker-compose up -d
+      - run: docker-compose up -d && sleep 10
       - run: npx hardhat test --network localhost
         env:
           IPFS_GATEWAY_URL: http://127.0.0.1:8080/ipfs/
