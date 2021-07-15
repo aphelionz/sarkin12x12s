@@ -47,7 +47,7 @@ setTimeout(async (e) => {
     await contract.purchase(cid, { gasPrice, gasLimit, value: window.priceInWei })
   })
 
-  setInterval((function fetchPrice () {
+  setInterval((function sendEvents () {
     const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, provider)
     const filter = contract.filters.Transfer()
     contract.queryFilter(filter).then(events => {
@@ -64,7 +64,7 @@ setTimeout(async (e) => {
       document.querySelector('var.price').innerText = weiToEth(window.priceInWei)
     })
 
-    return fetchPrice
+    return sendEvents
   })(), 5000)
 
   const all = document.querySelectorAll('nft-listing').length
