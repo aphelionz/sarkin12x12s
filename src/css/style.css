@@ -40,7 +40,7 @@ nft-listing {
 header { position: relative; }
 header aside {
   position: absolute;
-  top: 0; right: 1rem;
+  top: 0; right: 0.75rem;
   text-align: center;
   font-size: 14px;
   line-height: 2rem;
