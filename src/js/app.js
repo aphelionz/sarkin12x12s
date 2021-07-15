@@ -62,16 +62,17 @@ setTimeout(async (e) => {
       document.dispatchEvent(priceEvent)
 
       document.querySelector('var.price').innerText = weiToEth(window.priceInWei)
+
+      // TODO: Move this somewhere else
+      const all = document.querySelectorAll('nft-listing').length
+      const owned = document.querySelectorAll('nft-listing[owner]').length
+      const yours = document.querySelectorAll('nft-listing[yours]').length
+
+      document.querySelector('var.all').innerText = all
+      document.querySelector('var.available').innerText = all - owned
+      document.querySelector('var.yours').innerText = yours
     })
 
     return sendEvents
   })(), 5000)
-
-  const all = document.querySelectorAll('nft-listing').length
-  const owned = document.querySelectorAll('nft-listing[owner]').length
-  const yours = document.querySelectorAll('nft-listing[yours]').length
-
-  document.querySelector('var.all').innerText = all - owned
-  document.querySelector('var.available').innerText = all - owned
-  document.querySelector('var.yours').innerText = yours
 }, 500)
