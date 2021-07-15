@@ -93,3 +93,11 @@ footer {
   font-size: 13px;
   padding-top: 3rem;
 }
+
+.warning {
+  text-align: center;
+  font-weight: bold;
+  color: black;
+  background-color: #757575;
+  padding: 0.35rem;
+}
