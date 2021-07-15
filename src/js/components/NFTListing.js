@@ -21,8 +21,6 @@ export class NFTListing extends HTMLElement {
     img.style.maxWidth = '100%'
     this.shadowRoot.append(img)
 
-    this.priceInWei = 0
-
     const nftButton = document.createElement('button')
     nftButton.innerText = ''
     nftButton.classList.add('nft')
@@ -47,11 +45,10 @@ export class NFTListing extends HTMLElement {
 
     try {
       const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, provider.getSigner())
-      const value = this.priceInWei
 
       const gasPrice = await provider.getGasPrice()
-      const gasLimit = await contract.estimateGas.purchase(cid, { value })
-      await contract.purchase(cid, { gasPrice, gasLimit, value })
+      const gasLimit = await contract.estimateGas.purchase(cid, { value: window.priceInWei })
+      await contract.purchase(cid, { gasPrice, gasLimit, value: window.priceInWei })
     } catch (e) {
       console.log(e.code, (e.data?.message || e.message))
     }
@@ -74,21 +71,6 @@ export class NFTListing extends HTMLElement {
 
     if (ethers.BigNumber.from(owner).eq(ethers.BigNumber.from(window.ethereum.selectedAddress))) {
       this.setAttribute('yours', true)
-    }
-  }
-
-  updatePrice (priceInWei) {
-    this.priceInWei = priceInWei
-    const priceInETH = weiToEth(this.priceInWei)
-    const nftButton = this.shadowRoot.querySelector('button.nft')
-    const owner = this.getAttribute('owner') !== 'undefined' ? this.getAttribute('owner') : false
-
-    if (nftButton) {
-      if (owner) {
-        nftButton.innerText = `Owned by ${truncateAddress(owner)}`
-      } else {
-        nftButton.innerText = `Available: Ξ${priceInETH}`
-      }
     }
   }
 }

@@ -54,12 +54,21 @@ setTimeout(async (e) => {
 
     const chainlinkAggregator = new ethers.Contract(CHAINLINK_ADDRESS, CHAINLINK_ABI, provider)
     chainlinkAggregator.functions.latestRoundData().then(res => {
-      const wei = ethers.BigNumber.from('0x1D14A0219E54822428000000').div(res.answer)
-      document.querySelector('var').innerText = weiToEth(wei)
-      const priceEvent = new CustomEvent('price', { detail: wei })
+      window.priceInWei = ethers.BigNumber.from('0x1D14A0219E54822428000000').div(res.answer)
+      const priceEvent = new CustomEvent('price', { detail: window.priceInWei })
       document.dispatchEvent(priceEvent)
+
+      document.querySelector('var.price').innerText = weiToEth(window.priceInWei)
     })
 
     return fetchPrice
   })(), 5000)
+
+  const all = document.querySelectorAll('nft-listing').length
+  const owned = document.querySelectorAll('nft-listing[owner]').length
+  const yours = document.querySelectorAll('nft-listing[yours]').length
+
+  document.querySelector('var.all').innerText = all - owned
+  document.querySelector('var.available').innerText = all - owned
+  document.querySelector('var.yours').innerText = yours
 }, 500)
