@@ -27,6 +27,8 @@ services:
       - '8545:8545'
     environment:
       ALCHEMY_MAINNET_RPC_URL: "$ALCHEMY_MAINNET_RPC_URL"
+      KEYS_OWNER: "$KEYS_OWNER"
+      KEYS_ACCT1: "$KEYS_ACCT1"
     healthcheck:
       test: ["CMD", "npx", "hardhat", "check"]
       interval: 1m
