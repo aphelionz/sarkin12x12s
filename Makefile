@@ -7,8 +7,6 @@ endif
 all: deps deploy-hardhat .instaloader ingest-nfts
 
 deps: node_modules venv .build cache
-	docker-compose up -d
-	sleep 10
 
 deploy-hardhat:
 	npx hardhat run --network localhost scripts/deploy.js
@@ -28,7 +26,6 @@ test: clean deps deploy-hardhat
 	npx hardhat test --network localhost
 
 clean:
-	docker-compose down
 	rm -f package-lock.json
 	rm -rf node_modules
 	rm -rf artifacts
