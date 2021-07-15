@@ -1,0 +1,21 @@
+diff --git a/contracts/721-SarkinNFTs.sol b/contracts/721-SarkinNFTs.sol
+index d2a8782..7378a08 100644
+--- a/contracts/721-SarkinNFTs.sol
++++ b/contracts/721-SarkinNFTs.sol
+@@ -10,14 +10,14 @@ contract SarkinNFTs is ERC721 {
+     uint256 immutable _priceInUSD;
+ 
+     /**
+-     * Network: Mainnet
++     * Network: Testnet (Rinkeby)
+      * Aggregator: ETH/USD
+      * Address: 0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419
+      */
+     constructor() ERC721("Jon Sarkin", "SRK") {
+         _owner = payable(msg.sender);
+         _priceInUSD = 0x1D14A0219E54822428000000; // $90
+-        priceFeed = AggregatorV3Interface(0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419);
++        priceFeed = AggregatorV3Interface(0x8A753747A1Fa494EC906cE90E9f37563A8AF630e);
+     }
+ 
+     modifier onlyOwner() {

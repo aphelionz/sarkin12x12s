@@ -4,14 +4,19 @@ ifneq (,$(wildcard ./.env))
     export
 endif
 
-all: deps deploy-contract .instaloader ingest-nfts
+all: deps deploy-hardhat .instaloader ingest-nfts
 
 deps: node_modules venv .build cache
 	docker-compose up -d
 	sleep 10
 
-deploy-contract:
+deploy-hardhat:
 	npx hardhat run --network localhost scripts/deploy.js
+
+deploy-rinkeby:
+	git apply ./patches/rinkeby.patch
+	npx hardhat run --network rinkeby scripts/deploy.js
+	git checkout contracts
 
 watch: node_modules .build .instaloader
 	./venv/bin/html_lint.py src/index.html
@@ -19,7 +24,7 @@ watch: node_modules .build .instaloader
 		"cp -r src/** .build && npx hardhat run scripts/ingest.js --network localhost"
 
 .PHONY: test
-test: clean deps deploy-contract
+test: clean deps deploy-hardhat
 	npx hardhat test --network localhost
 
 clean:
