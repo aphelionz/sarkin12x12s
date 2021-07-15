@@ -25,6 +25,7 @@
     "@openzeppelin/contracts": "^4.2.0",
     "dotenv": "^10.0.0",
     "ipfs-http-client": "^50.1.2",
+    "node-fetch": "npm:@achingbrain/node-fetch@^2.6.7",
     "node-html-parser": "^4.0.0"
   },
   "devDependencies": {
