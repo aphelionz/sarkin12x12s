@@ -3,7 +3,6 @@
 const CONTRACT_ADDRESS = document.querySelector('#nfts').dataset.contract
 const IPFS_GATEWAY_URL = document.querySelector('#nfts').dataset.gateway
 const ABI = JSON.parse(document.querySelector('#abi').innerText)
-const provider = new ethers.providers.Web3Provider(window.ethereum)
 
 export class NFTListing extends HTMLElement {
   constructor () {
@@ -27,6 +26,7 @@ export class NFTListing extends HTMLElement {
     const cid = this.id
 
     try {
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
       const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, provider.getSigner())
 
       const gasPrice = await provider.getGasPrice()

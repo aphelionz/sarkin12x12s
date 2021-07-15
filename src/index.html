@@ -8,7 +8,8 @@
 
 <div class="warning">
   This is a development / testing version. Contract addresses may change and NFTs may be lost.
-  Use the Rinkeby faucet to get ETH to play with
+  <br />
+  Connect using MetaMask and use the Rinkeby faucet to get ETH to play with
 </div>
 
 <header>
@@ -16,14 +17,14 @@
   <h2>Unique pieces by Jon Sarkin</h2>
 
   <aside>
-    <metamask-login>
-      <button slot="button"></button>
+    <metamask-login class="metamask">
+      <button slot="button">Connect Metamask</button>
     </metamask-login>
     <div>version %VERSION%</div>
   </aside>
 </header>
 
-<nav>
+<nav class="metamask">
   <form>
     <button id="buy-random">
       Buy random piece for Ξ<var class="price"></var>

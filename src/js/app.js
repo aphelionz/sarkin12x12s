@@ -31,16 +31,19 @@ window.addEventListener('hashchange', (function updateNFTList () {
 })())
 
 setTimeout(async (e) => {
+  if (window.ethereum) {
+    document.querySelectorAll('.metamask').forEach(e => { e.style.display = 'inherit' })
+  }
+
   customElements.define('metamask-login', MetaMaskLogin)
   customElements.define('nft-listing', NFTListing)
-
-  const provider = new ethers.providers.Web3Provider(window.ethereum)
 
   document.querySelector('button#buy-random').addEventListener('click', async () => {
     const array = new Uint32Array(1)
     const selection = window.crypto.getRandomValues(array)[0] % 113
     const cid = document.querySelectorAll('nft-listing')[selection].id
 
+    const provider = new ethers.providers.Web3Provider(window.ethereum)
     const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, provider.getSigner())
     const gasPrice = await provider.getGasPrice()
     const gasLimit = await contract.estimateGas.purchase(cid, { value: window.priceInWei })
@@ -48,6 +51,8 @@ setTimeout(async (e) => {
   })
 
   setInterval((function sendEvents () {
+    const provider = new ethers.providers.Web3Provider(window.ethereum)
+
     const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, provider)
     const filter = contract.filters.Transfer()
     contract.queryFilter(filter).then(events => {
