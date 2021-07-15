@@ -18,21 +18,7 @@ export class NFTListing extends HTMLElement {
     img.style.maxWidth = '100%'
     this.shadowRoot.append(img)
 
-    const nftButton = document.createElement('button')
-    nftButton.innerText = ''
-    nftButton.classList.add('nft')
-    nftButton.style.position = 'absolute'
-    nftButton.style.bottom = '0'
-    nftButton.style.left = '0'
-    nftButton.style.background = '#000000c3'
-    nftButton.style.width = '100%'
-    nftButton.style.color = '#fff0ff'
-    nftButton.style.border = 'none'
-    nftButton.style.fontWeight = 'bold'
-    nftButton.style.paddingTop = '0.5rem'
-    nftButton.style.paddingBottom = '0.5rem'
-    nftButton.addEventListener('click', this.buyNFT.bind(this))
-    this.shadowRoot.append(nftButton)
+    this.addEventListener('click', this.buyNFT)
   }
 
   async buyNFT (e) {
