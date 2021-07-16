@@ -31,7 +31,9 @@ setTimeout(async (e) => {
   customElements.define('metamask-login', MetaMaskLogin)
   customElements.define('nft-listing', NFTListing)
 
-  document.querySelector('button#buy-random').addEventListener('click', async () => {
+  document.querySelector('button#buy-random').addEventListener('click', async (e) => {
+    e.preventDefault()
+
     const array = new Uint32Array(1)
     const selection = window.crypto.getRandomValues(array)[0] % 113
     const cid = document.querySelectorAll('nft-listing')[selection].id
