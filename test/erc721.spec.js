@@ -19,7 +19,7 @@ const txOptions = {}
 
 describe('ERC721 Baseline', function () {
   let nfts
-  let acct1, owner
+  let acct1, manager, owner
   let chainlinkAggregator
 
   this.timeout(0)
