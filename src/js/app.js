@@ -30,6 +30,7 @@ window.addEventListener('hashchange', (function updateNFTList () {
   return updateNFTList
 })())
 
+
 setTimeout(async (e) => {
   if (window.ethereum) {
     document.querySelectorAll('.metamask').forEach(e => { e.style.display = 'inherit' })
