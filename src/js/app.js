@@ -12,21 +12,14 @@ function weiToEth (wei) {
   return (wei / (10 ** 18)).toFixed(4)
 }
 
-if (window.location.hash === '') {
-  window.location.hash = 'available'
-}
+if (window.location.hash === '') { window.location.hash = 'available' }
+document.body.addEventListener('change', function (e) { window.location.hash = e.target.value })
 
 window.addEventListener('hashchange', (function updateNFTList () {
   const hash = window.location.hash.substr(1)
   const nftList = document.querySelector('#nfts')
-
-  document.querySelectorAll('footer > form a').forEach(el => {
-    el.classList.remove('active')
-    nftList.classList.remove(el.href.split('#')[1])
-  })
-  document.querySelector(`footer > form a[href="#${hash}"]`).classList.add('active')
+  nftList.classList.remove('yours', 'available', 'all')
   nftList.classList.add(hash)
-
   return updateNFTList
 })())
 

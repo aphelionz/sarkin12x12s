@@ -82,30 +82,48 @@ header h2 {
   header h2 { font-size: 14px; }
 }
 
-footer > form { margin: 0.5rem 0.75rem; position: relative; }
-footer > form a { margin-left: 0.25rem; }
-footer > form a:not(.active) {
-  text-decoration: none;
-  color: #9f909f;
+body > form {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  box-shadow: 0px 0px 3px #000;
 }
 
-footer > form { line-height: 2rem; text-align: right; }
+body > form span {
+  display: block;
+  background-color: #131313;
+  height: 3rem;
+  line-height: 3rem;
+  font-size: 14px;
+}
+body > form :checked + span {
+  background-color: black;
+  font-weight: bold;
+}
+body > form input[type="radio"] { display: none; }
 
-@media screen and (max-width: 420px) {
-  footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    z-index: 2;
-    background-color: black;
-    width: 100%;
-    text-align: center;
-  }
+body > form label {
+  float: left;
+  width: 33.33%;
+  text-align: center;
+}
 
-  footer > form button {
-    width: 96%;
-    margin: 2%;
-  }
+body > form button {
+  width: 100%;
+  background-color: black;
+}
+
+footer {
+  padding: 0.75rem 0.75rem 0.25rem;
+  background-color: black;
+  width: calc(100% - 1.5rem);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+footer > div:last-child {
+  text-align: right;
 }
 
 .metamask { display: none; }
