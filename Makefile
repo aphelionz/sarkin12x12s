@@ -21,8 +21,13 @@ watch: node_modules .build .instaloader
 	npx nodemon --watch src -e js,html,css --exec "sh -c" \
 		"cp -r src/** .build && npx hardhat run scripts/ingest.js --network localhost"
 
+reset:
+	docker-compose down
+	docker-compose up -d
+	sleep 10
+
 .PHONY: test
-test: deps deploy-hardhat
+test: reset deps deploy-hardhat
 	npx hardhat test --network localhost
 
 clean:
