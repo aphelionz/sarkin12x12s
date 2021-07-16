@@ -23,13 +23,13 @@ body a { color: #afa0af; }
   .warning { font-size: 12px; }
 }
 
+@media screen and (min-width: 1050px) {
+  .nfts { grid-template-columns: 1fr 1fr 1fr 1fr; }
+}
 .nfts {
   clear: both;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-}
-@media screen and (min-width: 1050px) {
-  .nfts { grid-template-columns: 1fr 1fr 1fr 1fr 1fr; }
+  grid-template-columns: 1fr 1fr 1fr;
 }
 @media screen and (max-width: 700px) {
   .nfts { grid-template-columns: 1fr 1fr; }
