@@ -13,6 +13,8 @@ index d2a8782..7378a08 100644
       */
      constructor() ERC721("Jon Sarkin", "SRK") {
          _owner = payable(msg.sender);
+-        _manager = payable(address(0x003c44cdddb6a900fa2b585dd299e03d12fa4293bc));
++        _manager = payable(0xC95F721bdc075822D8c6A06F9Ef8852631a6e25c);
          _priceInUSD = 0x1D14A0219E54822428000000; // $90
 -        priceFeed = AggregatorV3Interface(0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419);
 +        priceFeed = AggregatorV3Interface(0x8A753747A1Fa494EC906cE90E9f37563A8AF630e);

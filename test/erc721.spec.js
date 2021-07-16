@@ -25,7 +25,7 @@ describe('ERC721 Baseline', function () {
   this.timeout(0)
 
   before(async function () {
-    [owner, acct1] = await ethers.getSigners()
+    [owner, acct1, manager] = await ethers.getSigners()
     txOptions.gasPrice = await ethers.provider.getGasPrice()
 
     chainlinkAggregator = new ethers
@@ -104,7 +104,7 @@ describe('ERC721 Baseline', function () {
   })
 
   describe('Purchasing', function () {
-    let startingBalance, tokenHex, value
+    let startingManagerBalance, startingOwnerBalance, tokenHex, value
 
     before(async () => {
       // ~$90 in USD
@@ -114,7 +114,8 @@ describe('ERC721 Baseline', function () {
       const tokenCID = await randomCID()
       tokenHex = bs58toHex(tokenCID.toString())
 
-      startingBalance = await ethers.provider.getBalance(owner.address)
+      startingOwnerBalance = await ethers.provider.getBalance(owner.address)
+      startingManagerBalance = await ethers.provider.getBalance(manager.address)
     })
 
     it('accepts the correct amount of ETH', async () => {
@@ -130,12 +131,14 @@ describe('ERC721 Baseline', function () {
       expect(finalBalance.lte(initialBalance.sub(value))).to.equal(true)
     })
 
-    it('passes the ETH through to the contract owner', async () => {
+    it('passes 70% the ETH through to the contract owner', async () => {
       const newOwnerBalance = await ethers.provider.getBalance(owner.address)
-      console.log(startingBalance.toString())
-      console.log(value.toString())
-      console.log(newOwnerBalance.toString())
-      expect(newOwnerBalance.sub(startingBalance)).to.deep.equal(value)
+      expect(newOwnerBalance.sub(startingOwnerBalance)).to.deep.equal(value.mul(70).div(100))
+    })
+
+    it('passes 30% the ETH through to the contract owner', async () => {
+      const newManagerBalance = await ethers.provider.getBalance(manager.address)
+      expect(newManagerBalance.sub(startingManagerBalance)).to.deep.equal(value.mul(30).div(100))
     })
 
     it('transfers the NFT to acct1 upon purchase', async () => {

@@ -6,6 +6,8 @@ import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
 contract SarkinNFTs is ERC721 {
     address payable private immutable _owner;
+    address payable private immutable _manager;
+
     AggregatorV3Interface internal immutable priceFeed;
     uint256 immutable _priceInUSD;
 
@@ -16,6 +18,7 @@ contract SarkinNFTs is ERC721 {
      */
     constructor() ERC721("Jon Sarkin", "SRK") {
         _owner = payable(msg.sender);
+        _manager = payable(address(0x003c44cdddb6a900fa2b585dd299e03d12fa4293bc));
         _priceInUSD = 0x1D14A0219E54822428000000; // $90
         priceFeed = AggregatorV3Interface(0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419);
     }
@@ -42,7 +45,9 @@ contract SarkinNFTs is ERC721 {
 
       emit Transfer(address(0x0), _owner, cid);
       _safeMint(msg.sender, cid, "{id}");
-      _owner.transfer(msg.value);
+
+      _owner.transfer((msg.value * 70) / 100);
+      _manager.transfer((msg.value * 30) / 100);
     }
 
     function getLatestPrice() internal view returns (uint) {
