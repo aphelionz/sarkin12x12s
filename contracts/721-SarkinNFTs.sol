@@ -25,6 +25,10 @@ contract SarkinNFTs is ERC721 {
         _;
     }
 
+    function contractURI() public view returns (string memory) {
+        return "https://12x12.jonsarkin.com/collection-metadata.json";
+    }
+
     function mint(address to, uint256 cid) external onlyOwner {
         _safeMint(to, cid, "{id}");
     }

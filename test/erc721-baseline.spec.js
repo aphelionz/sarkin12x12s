@@ -55,6 +55,11 @@ describe('ERC721 Baseline', function () {
       const supports = await nfts.supportsInterface('0x5b5e139f')
       expect(supports).to.equal(true)
     })
+
+    it('returns the 12x12.jonsarkin.com contractURI()', async () => {
+      const contractURI = await nfts.contractURI()
+      expect(contractURI).to.equal('https://12x12.jonsarkin.com/collection-metadata.json')
+    })
   })
 
   describe('Minting', function () {
