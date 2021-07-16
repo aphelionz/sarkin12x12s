@@ -8,19 +8,17 @@ export class MetaMaskLogin extends HTMLElement {
 
     const template = document.createElement('template')
     template.innerHTML = '<slot name="button"></slot>'
+    this.attachShadow({ mode: 'open' })
+    this.shadowRoot.append(template.content.cloneNode(true))
 
-    if (window.ethereum) {
-      this.attachShadow({ mode: 'open' })
-      this.shadowRoot.append(template.content.cloneNode(true))
+    this.button = this.querySelector('button')
+    this.button.addEventListener('click', this.getAccount.bind(this))
 
-      this.addEventListener('click', this.getAccount.bind(this))
-      window.ethereum.on('accountsChanged', this.updateSigner.bind(this))
-      window.ethereum.on('chainChanged', this.handleChainChange.bind(this))
-      window.ethereum.on('message', console.log)
+    window.ethereum?.on('accountsChanged', this.updateSigner.bind(this))
+    window.ethereum?.on('chainChanged', this.handleChainChange.bind(this))
+    window.ethereum?.on('message', console.log)
 
-      this.button = this.querySelector('button')
-      this.updateSigner([window.ethereum.selectedAddress])
-    }
+    this.updateSigner([window.ethereum.selectedAddress])
   }
 
   async getAccount () {
@@ -36,9 +34,6 @@ export class MetaMaskLogin extends HTMLElement {
   }
 
   updateSigner (accounts) {
-    this.button.innerText = 'Connect MetaMask'
-    this.connected = false
-
     if (accounts && accounts[0]) {
       this.button.innerText = truncateAddress(accounts[0])
       this.connected = true
