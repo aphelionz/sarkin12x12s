@@ -74,7 +74,7 @@ setTimeout(async (e) => {
       const owned = document.querySelectorAll('nft-listing[owner]').length
       const yours = document.querySelectorAll('nft-listing[yours]').length
 
-      document.querySelector('var.all').innerText = all
+      document.querySelectorAll('var.all').forEach(e => { e.innerText = all })
       document.querySelector('var.available').innerText = all - owned
       document.querySelector('var.yours').innerText = yours
     })
