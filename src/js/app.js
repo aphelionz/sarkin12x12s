@@ -32,7 +32,7 @@ window.addEventListener('hashchange', (function updateNFTList () {
 
 setTimeout(async (e) => {
   if (window.ethereum) {
-    document.querySelectorAll('.metamask').forEach(e => { e.style.display = 'inherit' })
+    document.querySelectorAll('.metamask').forEach(e => { e.classList.remove('metamask') })
   }
 
   customElements.define('metamask-login', MetaMaskLogin)
