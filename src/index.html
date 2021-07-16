@@ -14,27 +14,14 @@
 
 <header>
   <h1>12'' x 12''</h1>
-  <h2>Unique pieces by Jon Sarkin</h2>
+  <h2><var class="all"></var> Unique pieces by Jon Sarkin</h2>
 
   <aside>
     <metamask-login>
       <button slot="button">Connect Wallet</button>
     </metamask-login>
-    <div>version %VERSION%</div>
   </aside>
 </header>
-
-<nav class="metamask">
-  <form>
-    <button id="buy-random">
-      Buy random piece for Ξ<var class="price"></var>
-    </button>
-  </form>
-
-  <a href="#all">all [<var class="all">0</var>]</a>
-  <a href="#available">available [<var class="available">0</var>]</a>
-  <a href="#yours">yours [<var class="yours">0</var>]</a>
-</nav>
 
 <div id="nfts"
   data-gateway="%IPFS_GATEWAY_URL%"
@@ -44,7 +31,18 @@
 </div>
 
 <footer>
-  <p>© 2021 <a href="//jonsarkin.com">Jon Sarkin</a>
+  <form class="metamask">
+    <a href="#all">all [<var class="all">0</var>]</a>
+    <a href="#available">available [<var class="available">0</var>]</a>
+    <a href="#yours">yours [<var class="yours">0</var>]</a>
+
+    <button id="buy-random">
+      Buy random piece for Ξ<var class="price"></var>
+    </button>
+  </form>
+
+  <div><sup>©</sup> 2021 <a href="//jonsarkin.com">Jon Sarkin</a></div>
+  <div>v%VERSION%</div>
 </footer>
 
 <script type="module" src="./js/app.js"></script>

@@ -20,16 +20,15 @@ window.addEventListener('hashchange', (function updateNFTList () {
   const hash = window.location.hash.substr(1)
   const nftList = document.querySelector('#nfts')
 
-  document.querySelectorAll('body > nav a').forEach(el => {
+  document.querySelectorAll('footer > form a').forEach(el => {
     el.classList.remove('active')
     nftList.classList.remove(el.href.split('#')[1])
   })
-  document.querySelector(`body > nav a[href="#${hash}"]`).classList.add('active')
+  document.querySelector(`footer > form a[href="#${hash}"]`).classList.add('active')
   nftList.classList.add(hash)
 
   return updateNFTList
 })())
-
 
 setTimeout(async (e) => {
   if (window.ethereum) {

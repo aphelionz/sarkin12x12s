@@ -10,32 +10,16 @@ body {
 }
 body a { color: #afa0af; }
 
-body > nav { margin: 0.5rem 0.75rem; position: relative; }
-body > nav a { margin-left: 0.25rem; }
-body > nav a:not(.active) {
-  text-decoration: none;
-  color: #9f909f;
+.warning {
+  text-align: center;
+  font-weight: bold;
+  color: black;
+  background-color: #757575;
+  padding: 0.35rem;
 }
-
-body > nav { line-height: 2rem; text-align: right; }
-
-body > nav form { float: left; }
-
+.warning a { color: #333; }
 @media screen and (max-width: 420px) {
-  body > nav form {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    z-index: 2;
-    background-color: black;
-    width: 100%;
-    text-align: center;
-  }
-
-  body > nav form button {
-    width: 96%;
-    margin: 2%;
-  }
+  .warning { font-size: 12px; }
 }
 
 .nfts {
@@ -100,20 +84,30 @@ header h2 {
   header h2 { font-size: 14px; }
 }
 
-footer {
-  padding-top: 3rem;
+footer > form { margin: 0.5rem 0.75rem; position: relative; }
+footer > form a { margin-left: 0.25rem; }
+footer > form a:not(.active) {
+  text-decoration: none;
+  color: #9f909f;
 }
 
-.warning {
-  text-align: center;
-  font-weight: bold;
-  color: black;
-  background-color: #757575;
-  padding: 0.35rem;
-}
-.warning a { color: #333; }
+footer > form { line-height: 2rem; text-align: right; }
+
 @media screen and (max-width: 420px) {
-  .warning { font-size: 12px; }
+  footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    background-color: black;
+    width: 100%;
+    text-align: center;
+  }
+
+  footer > form button {
+    width: 96%;
+    margin: 2%;
+  }
 }
 
 .metamask { display: none; }
