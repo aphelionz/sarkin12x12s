@@ -69,9 +69,6 @@ button {
   background: transparent;
   color: var(--text-color);
 }
-@media screen and (max-width: 420px) {
-  button { font-size: 12px; }
-}
 
 body > header { margin-top: 1rem; }
 header h1 { margin: 0 0 0.25rem 0.75rem; }
@@ -112,3 +109,6 @@ footer > form { line-height: 2rem; text-align: right; }
 }
 
 .metamask { display: none; }
+@media screen and (max-width: 420px) {
+  metamask-login button { font-size: 12px; }
+}
