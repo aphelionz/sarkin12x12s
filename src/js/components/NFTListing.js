@@ -1,8 +1,6 @@
 /* global ethers, HTMLElement */
 
-const CONTRACT_ADDRESS = document.querySelector('#nfts').dataset.contract
 const IPFS_GATEWAY_URL = document.querySelector('#nfts').dataset.gateway
-const ABI = JSON.parse(document.querySelector('#abi').innerText)
 
 export class NFTListing extends HTMLElement {
   constructor () {
@@ -16,25 +14,6 @@ export class NFTListing extends HTMLElement {
     img.src = `${IPFS_GATEWAY_URL}${this.getAttribute('image-src')}`
     img.style.maxWidth = '100%'
     this.shadowRoot.append(img)
-
-    this.addEventListener('click', this.buyNFT)
-  }
-
-  async buyNFT (e) {
-    e.preventDefault()
-
-    const cid = this.id
-
-    try {
-      const provider = new ethers.providers.Web3Provider(window.ethereum)
-      const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, provider.getSigner())
-
-      const gasPrice = await provider.getGasPrice()
-      const gasLimit = await contract.estimateGas.purchase(cid, { value: window.priceInWei })
-      await contract.purchase(cid, { gasPrice, gasLimit, value: window.priceInWei })
-    } catch (e) {
-      console.log(e.code, (e.data?.message || e.message))
-    }
   }
 
   updateAttributes (id, events) {
