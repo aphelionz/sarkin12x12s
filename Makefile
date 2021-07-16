@@ -22,7 +22,7 @@ watch: node_modules .build .instaloader
 		"cp -r src/** .build && npx hardhat run scripts/ingest.js --network localhost"
 
 .PHONY: test
-test: clean deps deploy-hardhat
+test: deps deploy-hardhat
 	npx hardhat test --network localhost
 
 clean:
