@@ -12,6 +12,19 @@ body {
 
 a { color: #afa0af; }
 
+button {
+  border: 1px solid var(--text-color);
+  border-radius: 4px;
+  padding: 0.5rem;
+  background: transparent;
+  color: var(--text-color);
+}
+
+.metamask { display: none; }
+@media screen and (max-width: 420px) {
+  metamask-login button { font-size: 12px; }
+}
+
 /* Testnet Warning */
 
 body > .warning {
@@ -54,6 +67,8 @@ body > header h2 {
   body > header h2 { font-size: 14px; }
 }
 
+/* NFT Listing */
+
 @media screen and (min-width: 1050px) {
   .nfts { grid-template-columns: 1fr 1fr 1fr 1fr; }
 }
@@ -69,23 +84,17 @@ body > header h2 {
   .nfts { grid-template-columns: 1fr; }
 }
 
-nft-listing {
-  overflow: hidden;
-  position: relative;
-}
-
 .nfts > nft-listing { display: none; }
 .nfts.available > nft-listing:not([owner]) { display: block; }
 .nfts.yours > nft-listing[yours] { display: block; }
 .nfts.all > nft-listing { display: block; }
 
-button {
-  border: 1px solid var(--text-color);
-  border-radius: 4px;
-  padding: 0.5rem;
-  background: transparent;
-  color: var(--text-color);
+nft-listing {
+  overflow: hidden;
+  position: relative;
 }
+
+/* Order Form */
 
 body > form {
   position: fixed;
@@ -119,6 +128,8 @@ body > form button {
   background-color: black;
 }
 
+/* Footer */
+
 footer {
   padding: 0.75rem 0.75rem 0.25rem;
   background-color: black;
@@ -129,9 +140,4 @@ footer {
 
 footer > div:last-child {
   text-align: right;
-}
-
-.metamask { display: none; }
-@media screen and (max-width: 420px) {
-  metamask-login button { font-size: 12px; }
 }
