@@ -9,18 +9,49 @@ body {
   color: var(--text-color);
   margin: 0;
 }
-body a { color: #afa0af; }
 
-.warning {
+a { color: #afa0af; }
+
+/* Testnet Warning */
+
+body > .warning {
   text-align: center;
   font-weight: bold;
   color: black;
   background-color: #757575;
   padding: 0.35rem;
 }
-.warning a { color: #333; }
+body > .warning a { color: #333; }
 @media screen and (max-width: 420px) {
-  .warning { font-size: 12px; }
+  body > .warning { font-size: 12px; }
+}
+
+/* Header */
+
+body > header { position: relative; }
+body > header aside {
+  position: absolute;
+  top: 0; right: 0.75rem;
+  text-align: center;
+  font-size: 14px;
+  line-height: 2rem;
+}
+@media screen and (max-width: 420px) {
+  body > header aside {
+    font-size: 12px;
+  }
+}
+
+body > header { margin-top: 1rem; }
+body > header h1 { margin: 0 0 0.25rem 0.75rem; }
+body > header h2 {
+  margin: 0rem 0 0 0.75rem;
+  margin-bottom: 2rem;
+  font-size: 16px;
+  max-width: 65%;
+}
+@media screen and (max-width: 420px) {
+  body > header h2 { font-size: 14px; }
 }
 
 @media screen and (min-width: 1050px) {
@@ -48,38 +79,12 @@ nft-listing {
 .nfts.yours > nft-listing[yours] { display: block; }
 .nfts.all > nft-listing { display: block; }
 
-header { position: relative; }
-header aside {
-  position: absolute;
-  top: 0; right: 0.75rem;
-  text-align: center;
-  font-size: 14px;
-  line-height: 2rem;
-}
-@media screen and (max-width: 420px) {
-  header aside {
-    font-size: 12px;
-  }
-}
-
 button {
   border: 1px solid var(--text-color);
   border-radius: 4px;
   padding: 0.5rem;
   background: transparent;
   color: var(--text-color);
-}
-
-body > header { margin-top: 1rem; }
-header h1 { margin: 0 0 0.25rem 0.75rem; }
-header h2 {
-  margin: 0rem 0 0 0.75rem;
-  margin-bottom: 2rem;
-  font-size: 16px;
-  max-width: 65%;
-}
-@media screen and (max-width: 420px) {
-  header h2 { font-size: 14px; }
 }
 
 body > form {
