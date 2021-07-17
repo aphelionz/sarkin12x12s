@@ -1,6 +1,6 @@
 /* global customElements, CustomEvent, ethers  */
 
-import { MetaMaskLogin } from './components/MetaMaskLogin.js'
+import { MetaMaskIdentity } from './components/MetaMaskIdentity.js'
 import { NFTListing } from './components/NFTListing.js'
 
 const CONTRACT_ADDRESS = document.querySelector('#nfts').dataset.contract
@@ -28,7 +28,7 @@ setTimeout(async (e) => {
     document.querySelectorAll('.metamask').forEach(e => { e.classList.remove('metamask') })
   }
 
-  customElements.define('metamask-login', MetaMaskLogin)
+  customElements.define('metamask-identity', MetaMaskIdentity)
   customElements.define('nft-listing', NFTListing)
 
   document.querySelector('button#buy-random').addEventListener('click', async (e) => {

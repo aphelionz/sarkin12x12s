@@ -23,9 +23,6 @@ button {
 }
 
 .metamask { display: none; }
-@media screen and (max-width: 420px) {
-  metamask-login button { font-size: 12px; }
-}
 
 /* Testnet Warning */
 
