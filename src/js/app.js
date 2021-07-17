@@ -4,6 +4,8 @@ import { BuyRandom } from './components/BuyRandom.js'
 import { MetaMaskIdentity } from './components/MetaMaskIdentity.js'
 import { NFTListing } from './components/NFTListing.js'
 
+import { onWindowEthereum } from './utils.js'
+
 const CONTRACT_ADDRESS = document.querySelector('#nfts').dataset.contract
 const CHAINLINK_ADDRESS = document.querySelector('#nfts').dataset.chainlink
 const ABI = JSON.parse(document.querySelector('#abi').innerText)
@@ -24,7 +26,7 @@ window.addEventListener('hashchange', (function updateNFTList () {
   return updateNFTList
 })())
 
-setTimeout(async (e) => {
+onWindowEthereum(async (e) => {
   if (window.ethereum) {
     document.querySelectorAll('.metamask').forEach(e => { e.classList.remove('metamask') })
   }
@@ -63,4 +65,4 @@ setTimeout(async (e) => {
 
     return sendEvents
   })(), 5000)
-}, 500)
+})
