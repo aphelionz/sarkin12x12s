@@ -10,7 +10,9 @@ body {
   margin: 0;
 }
 
-a { color: #afa0af; }
+a, a > svg { color: #afa0af; fill: #afa0af; }
+a:hover, a:hover > svg { color: white; fill: white }
+a:active, a:active > svg { color: white; fill: white }
 
 button {
   border: 1px solid var(--text-color);
@@ -41,10 +43,13 @@ body > .warning a { color: #333; }
 
 /* Header */
 
-body > header { position: relative; }
+body > header {
+  position: relative;
+  margin: 0 0.75rem;
+}
 body > header aside {
   position: absolute;
-  top: 0; right: 0.75rem;
+  top: 0; right: 0;
   text-align: center;
   font-size: 14px;
   line-height: 2rem;
@@ -54,18 +59,15 @@ body > header aside {
     font-size: 12px;
   }
 }
+body > header a {
+  margin-right: 0.25rem;
+  text-decoration: none;
+}
+body > header a > svg { max-width: 16px; }
 
 body > header { margin-top: 1rem; }
-body > header h1 { margin: 0 0 0.25rem 0.75rem; }
-body > header h2 {
-  margin: 0rem 0 0 0.75rem;
-  margin-bottom: 2rem;
-  font-size: 16px;
-  max-width: 65%;
-}
-@media screen and (max-width: 420px) {
-  body > header h2 { font-size: 14px; }
-}
+body > header h1 { margin: 0; }
+body > header h1 > small { font-size: 16px; }
 
 /* NFT Listing */
 
