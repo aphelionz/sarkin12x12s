@@ -6,8 +6,8 @@ import { NFTListing } from './components/NFTListing.js'
 
 import { onWindowEthereum } from './utils.js'
 
-const CONTRACT_ADDRESS = document.querySelector('#nfts').dataset.contract
-const CHAINLINK_ADDRESS = document.querySelector('#nfts').dataset.chainlink
+const CONTRACT_ADDRESS = document.querySelector('meta[name="contract-address"]').content
+const CHAINLINK_ADDRESS = document.querySelector('meta[name="chainlink-address"]').content
 const ABI = JSON.parse(document.querySelector('#abi').innerText)
 const CHAINLINK_ABI = JSON.parse(document.querySelector('#chainlinkAbi').innerText)
 

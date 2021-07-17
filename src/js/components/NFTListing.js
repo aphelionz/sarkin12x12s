@@ -1,6 +1,6 @@
 /* global ethers, HTMLElement */
 
-const IPFS_GATEWAY_URL = document.querySelector('#nfts').dataset.gateway
+const IPFS_GATEWAY_URL = document.querySelector('meta[name="ipfs-gateway-url"]').content
 
 export class NFTListing extends HTMLElement {
   constructor () {
