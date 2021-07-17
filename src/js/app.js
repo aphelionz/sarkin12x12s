@@ -44,25 +44,17 @@ onWindowEthereum(async (e) => {
       const transfersEvent = new CustomEvent('transfers', { detail: events })
       document.dispatchEvent(transfersEvent)
     })
-
-    const chainlinkAggregator = new ethers.Contract(CHAINLINK_ADDRESS, CHAINLINK_ABI, provider)
-    chainlinkAggregator.functions.latestRoundData().then(res => {
-      window.priceInWei = ethers.BigNumber.from('0x1D14A0219E54822428000000').div(res.answer)
-      const priceEvent = new CustomEvent('price', { detail: window.priceInWei })
-      document.dispatchEvent(priceEvent)
-
-      document.querySelector('var.price').innerText = weiToEth(window.priceInWei)
-
-      // TODO: Move this somewhere else
-      const all = document.querySelectorAll('nft-listing').length
-      const owned = document.querySelectorAll('nft-listing[owner]').length
-      const yours = document.querySelectorAll('nft-listing[yours]').length
-
-      document.querySelectorAll('var.all').forEach(e => { e.innerText = all })
-      document.querySelector('var.available').innerText = all - owned
-      document.querySelector('var.yours').innerText = yours
-    })
-
-    return sendEvents
   })(), 5000)
+
+  setInterval((function updateCounts () {
+    const all = document.querySelectorAll('nft-listing').length
+    const owned = document.querySelectorAll('nft-listing[owner]').length
+    const yours = document.querySelectorAll('nft-listing[yours]').length
+
+    document.querySelectorAll('var.all').forEach(e => { e.innerText = all })
+    document.querySelector('var.available').innerText = all - owned
+    document.querySelector('var.yours').innerText = yours
+
+    return updateCounts
+  })(), 1000)
 })
