@@ -32,29 +32,31 @@
 </header>
 
 <div id="nfts"
-  data-gateway="%IPFS_GATEWAY_URL%"
+  data-gateway=
   data-contract="%CONTRACT_ADDRESS%"
   data-chainlink="%CHAINLINK_ADDRESS%"
   class="nfts available">
 </div>
 
-<form class="metamask">
-  <label>
+<form>
+  <label class="metamask">
     <input type="radio" name="filter" value="all">
-    <span>all</span>
+    <span>[<var class="all"></var>] all</span>
   </label>
-  <label>
+  <label class="metamask">
     <input type="radio" name="filter" value="available">
     <span>[<var class="available">0</var>] available</span>
   </label>
-  <label>
+  <label class="metamask">
     <input type="radio" name="filter" value="yours">
     <span>[<var class="yours">0</var>] yours</span>
   </label>
 
-  <button id="buy-random">
-    Buy random piece for Ξ<var class="price"></var>
-  </button>
+  <buy-random>
+    <button slot="button">
+      Buy random piece for Ξ<var class="price"></var>
+    </button>
+  </buy-random>
 
   <footer>
     <div>© 2021 <a href="//jonsarkin.com">Jon Sarkin</a></div>
