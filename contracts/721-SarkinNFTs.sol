@@ -30,6 +30,10 @@ contract SarkinNFTs is ERC721 {
         _;
     }
 
+    function _baseURI() internal pure override returns (string memory) {
+        return "https://12x12.jonsarkin.com/token/";
+    }
+
     function contractURI() public pure returns (string memory) {
         return "https://12x12.jonsarkin.com/collection-metadata.json";
     }
@@ -63,5 +67,12 @@ contract SarkinNFTs is ERC721 {
       // If the round is not complete yet, timestamp is 0
       require(timeStamp > 0, "Round not complete");
       return _priceInUSD / uint(price);
+    }
+
+    function tokenURI(uint256 tokenId) public view override returns (string memory) {
+        require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token");
+
+        string memory baseURI = _baseURI();
+        return bytes(baseURI).length > 0 ? string(abi.encodePacked(baseURI, tokenId.toHexString(), ".json")) : "";
     }
 }

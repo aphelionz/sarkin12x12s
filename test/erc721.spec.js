@@ -71,7 +71,7 @@ describe('ERC721 Baseline', function () {
       await tx.wait()
 
       const tokenURI = await nfts.tokenURI(tokenHex)
-      expect(tokenURI).to.equal('')
+      expect(tokenURI).to.equal(`https://12x12.jonsarkin.com/token/${tokenHex}.json`)
     })
 
     it('reports the correct owner', async () => {
