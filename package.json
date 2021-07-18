@@ -1,6 +1,6 @@
 {
   "name": "sarkin12x12s",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Smart Contract and front-end code for the \"Jon Sarkin 12x12s\" NFT collection ",
   "main": "index.js",
   "scripts": {
