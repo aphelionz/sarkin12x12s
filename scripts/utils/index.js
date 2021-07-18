@@ -1,4 +1,5 @@
 const fs = require('fs')
+const path = require('path')
 
 const bs58 = require('bs58')
 const { parse } = require('node-html-parser')
@@ -23,6 +24,8 @@ async function ingest (instaloaderFolder, htmlTemplate) {
   const root = parse(htmlTemplate.toString())
   const nftsList = root.querySelector('#nfts')
 
+  fs.mkdirSync(path.join(__dirname, '../../.build/token/'), { recursive: true })
+
   for (let it = timestamps.values(), timestamp = null; timestamp = it.next().value;) { // eslint-disable-line
     // TODO: Better Insta handling parsing
     // Set a start date
@@ -37,10 +40,11 @@ async function ingest (instaloaderFolder, htmlTemplate) {
       const nftMetadata = {
         name: timestamp,
         description,
-        image: `${hash.cid.toString()}`
+        image: `ipfs://${hash.cid.toString()}`
       }
 
       const metadata = await ipfs.add(JSON.stringify(nftMetadata))
+      fs.writeFileSync(`.build/token/${bs58toHex(metadata.cid.toString())}.json`, JSON.stringify(nftMetadata))
 
       nftTemplate.setAttributes({
         id: bs58toHex(metadata.cid.toString()),
