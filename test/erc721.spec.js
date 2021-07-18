@@ -109,7 +109,7 @@ describe('ERC721 Baseline', function () {
     before(async () => {
       // ~$90 in USD
       const latestPrice = (await chainlinkAggregator.latestRoundData()).answer
-      value = BigNumber.from('0x1D14A0219E54822428000000').div(latestPrice)
+      value = BigNumber.from('0x26C62AD77DC602DAE0000000').div(latestPrice)
 
       const tokenCID = await randomCID()
       tokenHex = bs58toHex(tokenCID.toString())
@@ -199,8 +199,8 @@ describe('ERC721 Baseline', function () {
   describe('Chainlink price feed', function () {
     it('returns the latest ETH/USD price for pinned USD amount', async () => {
       const latestPrice = (await chainlinkAggregator.latestRoundData()).answer
-      const ninetyInWei = BigNumber.from('0x1D14A0219E54822428000000').div(latestPrice)
-      console.log(`The current price of $90 in ETH is ${ninetyInWei.toString()} WEI`)
+      const oneTwentyInWei = BigNumber.from('0x26C62AD77DC602DAE0000000').div(latestPrice)
+      console.log(`The current price of $120 is ${oneTwentyInWei.toString()} WEI`)
     })
   })
 

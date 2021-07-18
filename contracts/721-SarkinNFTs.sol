@@ -5,6 +5,8 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
 contract SarkinNFTs is ERC721 {
+    using Strings for uint256;
+
     address payable private immutable _owner;
     address payable private immutable _manager;
 
@@ -19,7 +21,7 @@ contract SarkinNFTs is ERC721 {
     constructor() ERC721("Jon Sarkin", "SRK") {
         _owner = payable(msg.sender);
         _manager = payable(address(0x003c44cdddb6a900fa2b585dd299e03d12fa4293bc));
-        _priceInUSD = 0x1D14A0219E54822428000000; // $90
+        _priceInUSD = 0x26C62AD77DC602DAE0000000; // $120
         priceFeed = AggregatorV3Interface(0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419);
     }
 
