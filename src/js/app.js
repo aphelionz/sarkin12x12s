@@ -7,13 +7,7 @@ import { NFTListing } from './components/NFTListing.js'
 import { onWindowEthereum } from './utils.js'
 
 const CONTRACT_ADDRESS = document.querySelector('meta[name="contract-address"]').content
-const CHAINLINK_ADDRESS = document.querySelector('meta[name="chainlink-address"]').content
 const ABI = JSON.parse(document.querySelector('#abi').innerText)
-const CHAINLINK_ABI = JSON.parse(document.querySelector('#chainlinkAbi').innerText)
-
-function weiToEth (wei) {
-  return (wei / (10 ** 18)).toFixed(4)
-}
 
 if (window.location.hash === '') { window.location.hash = 'available' }
 document.body.addEventListener('change', function (e) { window.location.hash = e.target.value })
