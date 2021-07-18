@@ -1,6 +1,6 @@
 /* global ethers, HTMLElement */
 
-import { onWindowEthereum, truncateAddress } from '../utils.js'
+import { onWindowEthereum } from '../utils.js'
 
 const ABI = JSON.parse(document.querySelector('#abi').innerText)
 const CHAINLINK_ABI = JSON.parse(document.querySelector('#chainlinkAbi').innerText)
@@ -41,9 +41,6 @@ export class BuyRandom extends HTMLElement {
         await contract.purchase(cid, { gasPrice, gasLimit, value: this.price })
       })
     })
-  }
-
-  buyRandomPiece () {
   }
 
   async updatePrice () {
