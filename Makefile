@@ -4,12 +4,9 @@ ifneq (,$(wildcard ./.env))
     export
 endif
 
-all: deps deploy-hardhat .instaloader ingest-nfts
+all: deps .instaloader ingest-nfts
 
 deps: node_modules venv .build cache
-
-deploy-hardhat:
-	npx hardhat run --network localhost scripts/deploy.js
 
 deploy-rinkeby:
 	git apply ./patches/rinkeby.patch
@@ -25,9 +22,10 @@ reset:
 	docker-compose down
 	docker-compose up -d
 	sleep 10
+	npx hardhat run --network localhost scripts/deploy.js
 
 .PHONY: test
-test: reset deps deploy-hardhat
+test: reset deps
 	npx hardhat test --network localhost
 
 clean:
