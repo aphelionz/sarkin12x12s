@@ -13,6 +13,8 @@ const ipfs = create(process.env.IPFS_API_URL)
 
 const bs58toHex = (b58) => `0x${Buffer.from(bs58.decode(b58).slice(2)).toString('hex')}`
 
+const description = 'A unique and hand-drawn image from Jon Sarkin\'s "12x12" collection'
+
 async function ingest (instaloaderFolder, htmlTemplate) {
   // TODO: Only jpg for now, other media types later
   const files = fs.readdirSync(instaloaderFolder)
@@ -26,19 +28,16 @@ async function ingest (instaloaderFolder, htmlTemplate) {
 
   fs.mkdirSync(path.join(__dirname, '../../.build/token/'), { recursive: true })
 
+  let count = 1
+
   for (let it = timestamps.values(), timestamp = null; timestamp = it.next().value;) { // eslint-disable-line
     // TODO: Better Insta handling parsing
-    // Set a start date
-    // Only parse things with #NFTs or some such hash tag
     try {
       const nftTemplate = parse('<nft-listing></nft-listing>').firstChild
-      const description = ''
-      // const description = fs
-      //   .readFileSync(instaloaderFolder + `/${timestamp}.txt`).toString().trim()
       const hash = await ipfs.add(globSource(instaloaderFolder + `/${timestamp}.jpg`))
 
       const nftMetadata = {
-        name: timestamp,
+        name: (count++).toString().padStart(5, '0'),
         description,
         image: `ipfs://${hash.cid.toString()}`
       }
