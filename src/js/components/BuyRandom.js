@@ -15,31 +15,62 @@ export class BuyRandom extends HTMLElement {
   constructor () {
     super()
 
+    this.price = 0
+    this.boundConnectWallet = this.connectWallet.bind(this)
+
     const template = document.createElement('template')
     template.innerHTML = '<slot name="button"></slot>'
     this.attachShadow({ mode: 'open' })
     this.shadowRoot.append(template.content.cloneNode(true))
-    this.button = this.querySelector('button')
+
+    this.button = this.querySelector('[slot="button"]')
+    this.button.addEventListener('click', this.boundConnectWallet)
 
     onWindowEthereum(() => {
-      this.price = 0
+      if (!window.ethereum) return
+      setTimeout(() => {
+        if (!window.ethereum.selectedAddress) return
+        this.initialize()
+      }, 500)
+    })
+  }
 
-      setInterval(this.updatePrice.bind(this), 10000)
-      this.updatePrice()
+  async connectWallet (e) {
+    e.preventDefault()
 
-      this.querySelector('[slot="button"]').addEventListener('click', async (e) => {
-        e.preventDefault()
+    if (!window.ethereum) {
+      window.location = '//metamask.app.link/dapp/12x12.jonsarkin.com'
+      return
+    }
 
-        const array = new Uint32Array(1)
-        const selection = window.crypto.getRandomValues(array)[0] % 131
-        const cid = document.querySelectorAll('nft-listing')[selection].id
+    try {
+      await window.ethereum.request({ method: 'eth_requestAccounts' })
+      this.initialize()
+    } catch (err) {
+      console.warn(err.message)
+    }
+  }
 
-        const provider = new ethers.providers.Web3Provider(window.ethereum)
-        const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, provider.getSigner())
-        const gasPrice = await provider.getGasPrice()
-        const gasLimit = await contract.estimateGas.purchase(cid, { value: this.price })
-        await contract.purchase(cid, { gasPrice, gasLimit, value: this.price })
-      })
+  async initialize () {
+    console.log('initialize')
+    this.button.removeEventListener('click', this.boundConnectWallet)
+    this.button.innerHTML = 'Buy random piece for Ξ<var class="price"></var>'
+
+    setInterval(this.updatePrice.bind(this), 10000)
+    this.updatePrice()
+
+    this.button.addEventListener('click', async (e) => {
+      e.preventDefault()
+
+      const array = new Uint32Array(1)
+      const selection = window.crypto.getRandomValues(array)[0] % 131
+      const cid = document.querySelectorAll('nft-listing')[selection].id
+
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, provider.getSigner())
+      const gasPrice = await provider.getGasPrice()
+      const gasLimit = await contract.estimateGas.purchase(cid, { value: this.price })
+      await contract.purchase(cid, { gasPrice, gasLimit, value: this.price })
     })
   }
 
