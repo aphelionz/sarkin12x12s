@@ -6,9 +6,17 @@ export class NFTListing extends HTMLElement {
   constructor () {
     super()
 
-    document.addEventListener('transfers', (e) => this.updateAttributes(this.id, e.detail))
-
     this.attachShadow({ mode: 'open' })
+    this.style.minHeight = window.innerWidth
+
+    document.addEventListener('transfers', (e) => this.updateAttributes(this.id, e.detail))
+    document.addEventListener('scroll', this.renderIfVisible.bind(this))
+    this.renderIfVisible()
+  }
+
+  renderIfVisible () {
+    if (this.shadowRoot.querySelector('img')) return
+    if (this.offsetTop - window.scrollY > window.innerHeight) return
 
     const img = document.createElement('img')
     img.src = `${IPFS_GATEWAY_URL}${this.getAttribute('image-src')}`
