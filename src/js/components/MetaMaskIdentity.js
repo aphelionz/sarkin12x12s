@@ -13,7 +13,10 @@ export class MetaMaskIdentity extends HTMLElement {
 
     onWindowEthereum(() => {
       window.ethereum?.on('accountsChanged', this.updateSigner.bind(this))
-      this.updateSigner([window.ethereum.selectedAddress])
+
+      setTimeout(() => {
+        this.updateSigner([window.ethereum?.selectedAddress])
+      }, 500)
     })
   }
 
