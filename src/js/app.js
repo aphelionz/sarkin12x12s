@@ -20,6 +20,12 @@ window.addEventListener('hashchange', (function updateNFTList () {
   return updateNFTList
 })())
 
+document.querySelector('.nfts').addEventListener('click', e => {
+  document.querySelector('nft-listing.selected')?.classList.remove('selected')
+  e.target.classList.add('selected')
+  window.scrollTo(0, e.target.offsetTop)
+})
+
 onWindowEthereum(async (e) => {
   if (window.ethereum) {
     document.querySelectorAll('.metamask').forEach(e => { e.classList.remove('metamask') })
