@@ -30,7 +30,7 @@ body > .warning {
   text-align: center;
   font-weight: bold;
   color: black;
-  background-color: #757575;
+  background-color: #999;
   padding: 0.35rem;
 }
 body > .warning a { color: #333; }
