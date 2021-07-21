@@ -34,7 +34,7 @@ body > .warning {
   padding: 0.35rem;
 }
 body > .warning a { color: #333; }
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 480px) {
   body > .warning { font-size: 12px; }
 }
 
@@ -51,7 +51,7 @@ body > header aside {
   font-size: 14px;
   line-height: 2rem;
 }
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 480px) {
   body > header aside {
     font-size: 12px;
   }
