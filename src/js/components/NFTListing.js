@@ -17,6 +17,7 @@ export class NFTListing extends HTMLElement {
   renderIfVisible () {
     if (this.shadowRoot.querySelector('img')) return
     if (this.offsetTop - window.scrollY > window.innerHeight) return
+    if (this.offsetTop - window.scrollY < 0) return
 
     const img = document.createElement('img')
     img.src = `${IPFS_GATEWAY_URL}${this.getAttribute('image-src')}`
