@@ -3,6 +3,7 @@
 
 [![Static Analysis](https://github.com/aphelionz/scrarkin/actions/workflows/static-analysis.yml/badge.svg)](https://github.com/aphelionz/scrarkin/actions/workflows/static-analysis.yml)
 [![Tests](https://github.com/aphelionz/scrarkin/actions/workflows/node.js.yml/badge.svg)](https://github.com/aphelionz/scrarkin/actions/workflows/node.js.yml)
+[![GitHub Pages](https://github.com/aphelionz/sarkin12x12s/actions/workflows/gh-pages.yml/badge.svg)](https://github.com/aphelionz/sarkin12x12s/actions/workflows/gh-pages.yml)
 
 ## Install
 
