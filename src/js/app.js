@@ -27,6 +27,9 @@ document.querySelector('.nfts').addEventListener('click', e => {
 })
 
 onWindowEthereum(async (e) => {
+  const nfts = document.querySelectorAll('nft-listing')
+  nfts[Math.floor(Math.random() * nfts.length)].click()
+
   if (window.ethereum) {
     document.querySelectorAll('.metamask').forEach(e => { e.classList.remove('metamask') })
   }
