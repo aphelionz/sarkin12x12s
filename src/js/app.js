@@ -23,7 +23,7 @@ window.addEventListener('hashchange', (function updateNFTList () {
 document.querySelector('.nfts').addEventListener('click', e => {
   document.querySelector('nft-listing.selected')?.classList.remove('selected')
   e.target.classList.add('selected')
-  window.scrollTo(0, e.target.offsetTop)
+  window.scrollTo(0, e.target.offsetTop - 100)
 })
 
 onWindowEthereum(async (e) => {
