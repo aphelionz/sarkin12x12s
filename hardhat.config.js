@@ -25,3 +25,13 @@ module.exports = {
     }
   }
 }
+
+if (process.env.KEYS_OWNER && process.env.KEYS_ACCT1) {
+  config.networks.rinkeby = {
+    url: 'https://eth-rinkeby.alchemyapi.io/v2/cjl-KmDLkL3lXgz0s8FtUl9OPFYIK5B2',
+    from: process.env.KEYS_OWNER,
+    accounts: [process.env.KEYS_OWNER, process.env.KEYS_ACCT1]
+  }
+}
+
+module.exports = config
