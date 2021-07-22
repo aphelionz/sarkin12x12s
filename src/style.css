@@ -26,14 +26,14 @@ button {
 
 /* Testnet Warning */
 
-body > .warning {
+body > header .warning {
   text-align: center;
   font-weight: bold;
   color: black;
   background-color: #999;
   padding: 0.35rem;
 }
-body > .warning a { color: #333; }
+body > header .warning a { color: #333; }
 @media screen and (max-width: 480px) {
   body > .warning { font-size: 12px; }
 }
@@ -62,7 +62,6 @@ body > header a {
 }
 body > header a > svg { max-width: 16px; }
 
-body > header { margin-top: 1rem; }
 body > header h1 { margin: 0; }
 body > header h1 > small { font-size: 16px; }
 
