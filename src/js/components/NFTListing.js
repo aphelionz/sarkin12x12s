@@ -7,7 +7,7 @@ export class NFTListing extends HTMLElement {
     super()
 
     this.attachShadow({ mode: 'open' })
-    this.style.minHeight = window.innerWidth
+    this.style.height = `${this.offsetWidth}px`
 
     document.addEventListener('transfers', (e) => this.updateAttributes(this.id, e.detail))
     document.addEventListener('scroll', this.renderIfVisible.bind(this))
