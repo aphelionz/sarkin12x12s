@@ -1,4 +1,4 @@
-/* global customElements, CustomEvent, ethers  */
+/* global customElements, CustomEvent, ethers, getComputedStyle */
 
 import { BuyRandom } from './components/BuyRandom.js'
 import { MetaMaskIdentity } from './components/MetaMaskIdentity.js'
@@ -9,27 +9,46 @@ import { onWindowEthereum } from './utils.js'
 const CONTRACT_ADDRESS = document.querySelector('meta[name="contract-address"]').content
 const ABI = JSON.parse(document.querySelector('#abi').innerText)
 
-if (window.location.hash === '') { window.location.hash = 'available' }
-document.body.addEventListener('change', function (e) { window.location.hash = e.target.value })
+window.onbeforeunload = function () {
+  window.scrollTo(0, 0)
+}
 
-window.addEventListener('hashchange', (function updateNFTList () {
-  const hash = window.location.hash.substr(1)
-  const nftList = document.querySelector('#nfts')
-  nftList.classList.remove('yours', 'available', 'all')
-  nftList.classList.add(hash)
-  return updateNFTList
-})())
+window.onload = function () {
+  window.addEventListener('hashchange', (function updateNFTList () {
+    const hash = window.location.hash.substr(1)
+    const nftList = document.querySelector('#nfts')
+    nftList.classList.remove('yours', 'available', 'all')
+    nftList.classList.add(hash)
+    return updateNFTList
+  })())
 
-document.querySelector('.nfts').addEventListener('click', e => {
-  document.querySelector('nft-listing.selected')?.classList.remove('selected')
-  e.target.classList.add('selected')
-  window.scrollTo(0, e.target.offsetTop - 100)
-})
+  document.querySelector('.nfts').addEventListener('click', e => {
+    const listing = e.target
+    const listingBottom = listing.offsetTop + listing.offsetHeight
+    const windowBottom = window.scrollY + window.innerHeight
 
-onWindowEthereum(async (e) => {
+    document.querySelector('nft-listing.selected')?.classList.remove('selected')
+    listing.classList.add('selected')
+
+    if (listingBottom > windowBottom) {
+      const delta = listingBottom - windowBottom
+      const bottomMargin = parseInt(getComputedStyle(document.querySelector('body')).marginBottom)
+      const firstLoadPadding = (window.scrollY === 0)
+        ? document.querySelector('nft-listing.selected').offsetHeight
+        : 0
+
+      window.scrollTo(0, window.scrollY + delta + bottomMargin + firstLoadPadding)
+    }
+  })
+
+  if (window.location.hash === '') { window.location.hash = 'available' }
+  document.body.addEventListener('change', function (e) { window.location.hash = e.target.value })
+
   const nfts = document.querySelectorAll('nft-listing')
   nfts[Math.floor(Math.random() * nfts.length)].click()
+}
 
+onWindowEthereum(async (e) => {
   if (window.ethereum) {
     document.querySelectorAll('.metamask').forEach(e => { e.classList.remove('metamask') })
   }
