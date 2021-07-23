@@ -1,5 +1,5 @@
 const fs = require('fs')
-const { ingest } = require('./utils')
+const { ingest } = require('./ingest/index')
 
 async function main () {
   const template = fs.readFileSync('./src/index.html')
