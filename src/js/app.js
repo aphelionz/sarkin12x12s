@@ -11,6 +11,7 @@ const ABI = JSON.parse(document.querySelector('#abi').innerText)
 
 window.onbeforeunload = function () {
   window.scrollTo(0, 0)
+  document.querySelector('.nfts').style.display = 'none'
 }
 
 window.onload = function () {
