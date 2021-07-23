@@ -78,23 +78,26 @@ body > header h1 > small { font-size: 16px; }
   grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
+.nfts > nft-listing.selected {
+  background: #333;
+  border: 1px solid white;
+  border-radius: 5px;
+  opacity: .5;
+}
+
 .nfts > nft-listing { display: none; min-height: 240px; }
-.nfts > nft-listing.selected { grid-column: span 3; grid-row: span 3; }
 .nfts.available > nft-listing:not([owner]) { display: block; }
 .nfts.yours > nft-listing[yours] { display: block; }
 .nfts.all > nft-listing { display: block; }
 
 @media screen and (min-width: 1400px) {
   .nfts { grid-template-columns: 1fr 1fr 1fr 1fr 1fr; }
-  .nfts > nft-listing.selected { grid-column: span 2; grid-row: span 2; }
 }
 @media screen and (max-width: 800px) {
   .nfts { grid-template-columns: 1fr 1fr 1fr; }
-  .nfts > nft-listing.selected { grid-column: span 3; grid-row: span 3; }
 }
 @media screen and (max-width: 480px) {
   .nfts > nft-listing { display: none; min-height: 160px; }
-  .nfts > nft-listing.selected { grid-column: span 2; grid-row: span 2; }
   .nfts { grid-template-columns: 1fr 1fr; }
 }
 
