@@ -67,3 +67,5 @@ artifacts cache:
 
 ingest-nfts: node_modules .build .instaloader
 	npx hardhat run scripts/ingest.js --network localhost
+
+cron: .instaloader ingest-nfts
