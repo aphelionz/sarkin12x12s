@@ -16,6 +16,8 @@ window.onbeforeunload = function () {
 
 window.onload = function () {
   window.addEventListener('hashchange', (function updateNFTList () {
+    if (window.location.hash === '') return
+
     const hash = window.location.hash.substr(1)
     const nftList = document.querySelector('#nfts')
     nftList.classList.remove('yours', 'available', 'all')
