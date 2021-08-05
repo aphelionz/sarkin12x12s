@@ -16,7 +16,7 @@ deploy-rinkeby:
 watch: node_modules .build .instaloader
 	./venv/bin/html_lint.py src/index.html
 	npx nodemon --watch src -e js,html,css --exec "sh -c" \
-		"cp -r src/** .build && npx hardhat run scripts/ingest.js --network localhost"
+		"cp -r src/** .build && npx hardhat run scripts/build.js --network localhost"
 
 reset:
 	docker-compose down
@@ -66,6 +66,6 @@ artifacts cache:
 	for file in ./.instaloader/*.xz; do xz -fd "$$file"; done
 
 ingest-nfts: node_modules .build .instaloader
-	npx hardhat run scripts/ingest.js --network localhost
+	npx hardhat run scripts/build.js --network localhost
 
 cron: .instaloader ingest-nfts
