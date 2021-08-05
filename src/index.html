@@ -27,11 +27,6 @@
 <link rel="stylesheet" href="./style.css">
 
 <header>
-  <div class="warning">
-    This is a <em>testnet</em> version with sample NFTs.
-    Use MetaMask and the <a href="//faucet.rinkeby.io/">Rinkeby faucet</a>.
-  </div>
-
   <h1>12'' x 12'' <small>by Jon Sarkin</small></h1>
 
   <aside>
@@ -52,36 +47,14 @@
         </svg>
       </a>
     </nav>
-
-    <metamask-identity><span slot="identity"></span></metamask-identity>
   </aside>
 </header>
 
 <div id="nfts" class="nfts available"></div>
 
-<form>
-  <label class="metamask">
-    <input type="radio" name="filter" value="all">
-    <span>[<var class="all"></var>] all</span>
-  </label>
-  <label class="metamask">
-    <input type="radio" name="filter" value="available">
-    <span>[<var class="available">0</var>] available</span>
-  </label>
-  <label class="metamask">
-    <input type="radio" name="filter" value="yours">
-    <span>[<var class="yours">0</var>] yours</span>
-  </label>
+<footer>
+  <div>© 2021 <a href="//jonsarkin.com">Jon Sarkin</a></div>
+  <div>v%VERSION%</div>
+</footer>
 
-  <buy-random>
-    <button slot="button">Connect Wallet</button>
-  </buy-random>
-
-  <footer>
-    <div>© 2021 <a href="//jonsarkin.com">Jon Sarkin</a></div>
-    <div>v%VERSION%</div>
-  </footer>
-</form>
-
-<script src="./js/ethers.umd.min.js"></script>
 <script type="module" src="./js/app.js"></script>
