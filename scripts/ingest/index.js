@@ -9,6 +9,15 @@ const description = 'A unique and hand-drawn image from Jon Sarkin\'s "12x12" co
 
 const { bs58toHex } = require('../utils')
 
+function extractTags(str) {
+  const tags = str.split(' ')
+    .filter(t => t !== '#12x12')
+    .filter(t => t.startsWith('#'))
+    .map(t => t.substr(1))
+
+  return tags
+}
+
 async function ingest (instaloaderFolder, htmlTemplate) {
   const AggregatorV3Abi = require('@chainlink/contracts/abi/v0.8/AggregatorV3Interface.json')
   const ipfs = create(process.env.IPFS_API_URL)
@@ -24,14 +33,20 @@ async function ingest (instaloaderFolder, htmlTemplate) {
   const nftsList = root.querySelector('#nfts')
 
   fs.mkdirSync(path.join(__dirname, '../../.build/token/'), { recursive: true })
+  fs.mkdirSync(path.join(__dirname, '../../.build/tags/'), { recursive: true })
 
   let count = 1
+  let tags = []
 
   for (let it = timestamps.values(), timestamp = null; timestamp = it.next().value;) { // eslint-disable-line
     // TODO: Better Insta handling parsing
     try {
       const nftTemplate = parse('<nft-listing></nft-listing>').firstChild
       const hash = await ipfs.add(globSource(instaloaderFolder + `/${timestamp}.jpg`))
+
+      const postTxt = fs.readFileSync(instaloaderFolder + `/${timestamp}.txt`)
+      const postTags = extractTags(postTxt.toString().trim())
+      tags = [].concat(postTags, tags)
 
       const nftMetadata = {
         name: (count++).toString().padStart(5, '0'),
@@ -56,6 +71,16 @@ async function ingest (instaloaderFolder, htmlTemplate) {
   }
 
   nftsList.childNodes.reverse()
+
+  const uniqueTags = [...new Set(tags)]
+  let tagList = '<ul>'
+  for (const tag of uniqueTags.sort()) {
+    tagList += `<li><a href="./tags/${tag}.html">${tag}</a>`
+    fs.writeFileSync(`.build/tags/${tag}.html`, 'tag')
+  }
+  tagList += '</ul>'
+
+  root.innerHTML = root.innerHTML.replace(/%TAGS%/g, tagList)
 
   root.innerHTML = root.innerHTML.replace(/%COUNT%/g, nftsList.childNodes.length)
   root.innerHTML = root.innerHTML.replace(/%VERSION%/g, packageInfo.version)
