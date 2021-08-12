@@ -8,15 +8,7 @@ const packageInfo = require('../../package.json')
 const description = 'A unique and hand-drawn image from Jon Sarkin\'s "12x12" collection'
 
 const { bs58toHex } = require('../utils')
-
-function extractTags(str) {
-  const tags = str.split(' ')
-    .filter(t => t !== '#12x12')
-    .filter(t => t.startsWith('#'))
-    .map(t => t.substr(1))
-
-  return tags
-}
+const { extractTags } = require('./tags')
 
 async function ingest (instaloaderFolder, htmlTemplate) {
   const AggregatorV3Abi = require('@chainlink/contracts/abi/v0.8/AggregatorV3Interface.json')
