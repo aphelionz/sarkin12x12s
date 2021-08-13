@@ -15,7 +15,7 @@ deploy-rinkeby:
 
 watch: node_modules .build .instaloader
 	./venv/bin/html_lint.py src/index.html
-	npx nodemon --watch src -e js,html,css --exec "sh -c" \
+	npx nodemon --watch src --watch scripts -e js,html,css --exec "sh -c" \
 		"cp -r src/** .build && npx hardhat run scripts/build.js --network localhost"
 
 reset:
