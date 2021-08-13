@@ -1,4 +1,4 @@
-function extractTags(str) {
+function extractTags (str) {
   const tags = str.split(' ')
     .map(t => t.trim())
     .filter(t => t !== '#12x12')

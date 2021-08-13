@@ -49,9 +49,9 @@ const instaloaderFolder = './.instaloader'
         body_html: 'A 12x12 by Jon Sarkin'
       })
 
-      const image = await shopify.productImage.create(product.id, {
+      await shopify.productImage.create(product.id, {
         attachment: base64,
-        filename: file,
+        filename: file
       })
 
       console.log(product.id)
