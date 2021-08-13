@@ -1,7 +1,7 @@
 const fs = require('fs')
 const { expect } = require('chai')
 const fetch = require('node-fetch')
-const { ingest } = require('../scripts/utils')
+const { ingest } = require('../scripts/ingest')
 
 describe('UI', function () {
   describe('Baseline', function () {
