@@ -7,7 +7,7 @@
     "lint": "npm run lint:js && npm run lint:solidity",
     "lint:solidity": "solhint 'contracts/**/*.sol'",
     "lint:js": "standard",
-    "test": "make test"
+    "test": "npx hardhat test --network localhost"
   },
   "repository": {
     "type": "git",
