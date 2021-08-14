@@ -30,12 +30,11 @@ const instaloaderFolder = './.instaloader'
 
       // create product
       const product = await shopify.product.create({
-        title: instagramMetadata.node.id,
+        title: 'Untitled',
         handle: instagramMetadata.node.id,
         tags: tags ? tags.join(',') : [],
         product_type: '12x12',
         variants: [{
-          barcode: instagramMetadata.node.id,
           fulfillment_service: 'manual',
           inventory_management: 'shopify',
           inventory_quantity: 1,
@@ -43,7 +42,8 @@ const instaloaderFolder = './.instaloader'
           sku: instagramMetadata.node.id,
           price: 120.00
         }],
-        body_html: 'A 12x12 by Jon Sarkin'
+        vendor: 'Jon Sarkin',
+        body_html: ''
       })
 
       const image = fs.readFileSync(instaloaderFolder + '/' + file)
