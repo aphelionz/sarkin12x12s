@@ -20,17 +20,14 @@ const instaloaderFolder = './.instaloader'
   await Promise.all(files.map(async (file) => {
     if (path.extname(file) !== '.jpg') return
 
-    const image = fs.readFileSync(instaloaderFolder + '/' + file)
-    const base64 = Buffer.from(image).toString('base64')
-
-    const instagramMetadata = JSON.parse(
-      fs.readFileSync(instaloaderFolder + `/${file.replace('.jpg', '.json')}`).toString()
-    )
-
-    const postTxt = fs.readFileSync(instaloaderFolder + `/${file.replace('.jpg', '.txt')}`)
-    const tags = extractTags(postTxt.toString())
-
     try {
+      const instagramMetadata = JSON.parse(
+        fs.readFileSync(instaloaderFolder + `/${file.replace('.jpg', '.json')}`).toString()
+      )
+
+      const postTxt = fs.readFileSync(instaloaderFolder + `/${file.replace('.jpg', '.txt')}`)
+      const tags = extractTags(postTxt.toString())
+
       // create product
       const product = await shopify.product.create({
         title: instagramMetadata.node.id,
@@ -48,6 +45,9 @@ const instaloaderFolder = './.instaloader'
         }],
         body_html: 'A 12x12 by Jon Sarkin'
       })
+
+      const image = fs.readFileSync(instaloaderFolder + '/' + file)
+      const base64 = Buffer.from(image).toString('base64')
 
       await shopify.productImage.create(product.id, {
         attachment: base64,
