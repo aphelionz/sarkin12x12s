@@ -46,7 +46,7 @@ const instaloaderFolder = './.instaloader'
           price: 120.00
         }],
         vendor: 'Jon Sarkin',
-        body_html: ''
+        body_html: 'Hand-drawn art by Jon Sarkin, sized 12″x12″ (or close).'
       })
 
       const image = fs.readFileSync(instaloaderFolder + '/' + file)
