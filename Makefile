@@ -68,4 +68,8 @@ artifacts cache:
 ingest-nfts: node_modules .build .instaloader
 	npx hardhat run scripts/build.js --network localhost
 
+shopify: .instaloader
+	rm -f .instaloader/*_profile_pic.*
+	npx hardhat run scripts/ingest/shopify.js
+
 cron: .instaloader ingest-nfts
