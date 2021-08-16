@@ -45,12 +45,6 @@
   "standard": {
     "env": [
       "mocha"
-    ],
-    "ignore": [
-      "src/js/bs58.js",
-      "src/js/buffer.js",
-      "src/js/ethers.js",
-      "src/js/ipfs-http-client.js"
     ]
   }
 }
