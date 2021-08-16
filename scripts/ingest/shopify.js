@@ -26,7 +26,7 @@ const instaloaderFolder = './.instaloader'
       )
 
       const existingProduct = await shopify.product.list({ handle: instagramMetadata.node.id })
-      if(existingProduct.length > 0) return
+      if (existingProduct.length > 0) return
 
       const postTxt = fs.readFileSync(instaloaderFolder + `/${file.replace('.jpg', '.txt')}`)
       const tags = extractTags(postTxt.toString())
