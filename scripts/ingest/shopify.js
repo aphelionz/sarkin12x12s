@@ -59,9 +59,7 @@ const instaloaderFolder = './.instaloader'
 
       console.log(product.id)
     } catch (err) {
-      console.log(err, err.response.body)
+      console.log(err, err.response?.body)
     }
   }))
 })()
-
-// shopify.product.list({ limit: 5 }).then(console.log)
