@@ -4,7 +4,7 @@ const { expect } = require('chai')
 const Shopify = require('shopify-api-node')
 
 const FIX = process.env.FIX === 'true'
-const TIMEOUT = FIX ? 0 : 20000
+const TIMEOUT = FIX ? 0 : 30000
 const URL_BASE = 'https://jonsarkin.myshopify.com/admin/products/'
 
 describe('Shopify Product Validator', function () {
