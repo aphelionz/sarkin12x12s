@@ -18,19 +18,28 @@ describe('Shopify Product Validator', function () {
   })
 
   let products = []
+  let inventoryItems = []
+  let metafields = []
 
   before(async () => {
     process.stdout.write('\tFetching product list.')
-    let params = { limit: 100 }
+    let productParams = { limit: 100 }
 
     do {
-      const productPage = await shopify.product.list(params)
+      try {
+        const productPage = await shopify.product.list(productParams)
+        const ids = productPage.map(p => p.variants[0].inventory_item_id).join(',')
+        const inventoryPage = await shopify.inventoryItem.list({ ids, limit: 100 })
 
-      products = [].concat(products, productPage)
+        products = [].concat(products, productPage)
+        inventoryItems = [].concat(inventoryItems, inventoryPage)
 
-      params = productPage.nextPageParameters
-      process.stdout.write('.')
-    } while (params !== undefined)
+        productParams = productPage.nextPageParameters
+        process.stdout.write('.')
+      } catch (err) {
+        console.log(err.response.body)
+      }
+    } while (productParams !== undefined)
     process.stdout.write('\n')
   })
 
@@ -39,12 +48,17 @@ describe('Shopify Product Validator', function () {
     expect(products.length).to.equal(productCount)
   })
 
+  it('matches the reported inventory item count from Shopify', async () => {
+    const inventoryCount = await shopify.product.count()
+    expect(inventoryItems.length).to.equal(inventoryCount)
+  })
+
   it('has valid titles', () => {
     let invalidTitleCount = 0
 
     for (const product of products) {
       if (product.title === 'Untitled') {
-        console.log(URL_BASE + product.id)
+        // console.log(URL_BASE + product.id)
         invalidTitleCount++
       }
     }
@@ -76,7 +90,7 @@ describe('Shopify Product Validator', function () {
     let invalidVariantCount = 0
 
     for (const product of products) {
-      if (product.variants.length > 1) {
+      if (product.variants.length !== 1) {
         console.log(URL_BASE + product.id)
         invalidVariantCount++
       }
@@ -281,5 +295,67 @@ describe('Shopify Product Validator', function () {
 
     const errorMsg = `${invalidWeightCount} products do not have a zero weight`
     expect(invalidWeightCount).to.equal(0, errorMsg)
+  })
+
+  it('has a cost-per-product of zero', async () => {
+    let invalidCostCount = 0
+
+    for (const item of inventoryItems) {
+      if (item.cost) {
+        // console.log(URL_BASE + product.id)
+        invalidCostCount++
+      }
+    }
+
+    expect(invalidCostCount).to.equal(0, `${invalidCostCount} products have an invalid cost`)
+  })
+
+  it('has a country of origin of US', async () => {
+    let invalidCountryCount = 0
+
+    for (const item of inventoryItems) {
+      if (item.country_code_of_origin !== 'US') {
+        if (FIX) {
+          console.log(`Fixing inventory ${item.id}`)
+          await shopify.inventoryItem.update(item.id, { country_code_of_origin: 'US' })
+        } else {
+          // console.log(URL_BASE + product.id)
+          invalidCountryCount++
+        }
+      }
+    }
+
+    expect(invalidCountryCount).to.equal(0, `${invalidCountryCount} products have an invalid CoO`)
+  })
+
+  it('has a harmony code of 970110', async () => {
+    let invalidHSCodeCount = 0
+
+    for (const item of inventoryItems) {
+      if (item.harmonized_system_code !== '970110') {
+        if (FIX) {
+          console.log(`Fixing inventory ${item.id}`)
+          await shopify.inventoryItem.update(item.id, { harmonized_system_code: 970110 })
+        } else {
+          // console.log(URL_BASE + product.id)
+          invalidHSCodeCount++
+        }
+      }
+    }
+
+    expect(invalidHSCodeCount).to.equal(0, `${invalidHSCodeCount} products have an invalid HSC`)
+  })
+
+  it.skip('updates google product category metafields', async () => {
+    for (const product of products) {
+      const fields = await shopify.metafield.list({
+        metafield: {
+          owner_resource: 'product',
+          owner_id: product.id
+        }
+      })
+
+      console.log(fields.filter(f => f.namespace !== 'shopify_pos'))
+    }
   })
 })
