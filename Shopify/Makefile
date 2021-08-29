@@ -33,4 +33,4 @@ venv:
 
 shopify: .instaloader
 	rm -f .instaloader/*_profile_pic.*
-	npx hardhat run scripts/ingest/shopify.js
+	node scripts/ingest-from-instagram.js
