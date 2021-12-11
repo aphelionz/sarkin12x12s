@@ -4,9 +4,11 @@
   "description": "Smart Contract and front-end code for the \"Jon Sarkin 12x12s\" NFT collection ",
   "main": "index.js",
   "scripts": {
-    "lint": "npm run lint:js && npm run lint:solidity",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint && npm run lint:solidity",
     "lint:solidity": "solhint 'contracts/**/*.sol'",
-    "lint:js": "standard",
     "test": "npx hardhat test --network localhost"
   },
   "repository": {
