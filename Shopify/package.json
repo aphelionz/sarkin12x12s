@@ -4,9 +4,11 @@
   "description": "Instagram crawler and Shopify scripts for the \"Jon Sarkin 12x12s\" collection ",
   "main": "index.js",
   "scripts": {
-    "lint": "standard",
-    "test": "mocha",
-    "fix": "FIX=true mocha"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
