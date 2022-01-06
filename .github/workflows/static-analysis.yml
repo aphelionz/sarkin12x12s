@@ -8,20 +8,6 @@ on:
 
 jobs:
   standard-js:
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: "14.x"
-          cache: 'npm'
-      - run: npm ci
-      - run: npm run lint:js
-
-  solhint:
-
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -30,4 +16,4 @@ jobs:
           node-version: "14.x"
           cache: 'npm'
       - run: npm ci
-      - run: npm run lint:solidity
+      - run: npm run lint
